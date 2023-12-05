@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/gfgg">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="63dp"
+        android:layout_marginRight="300dp"
+        android:background="@drawable/ic_launcher_background"
+        android:text="Start"
+        android:textColor="#bdfcf2"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="183dp"
+        android:layout_marginRight="300dp"
+        android:background="@drawable/ic_launcher_background"
+        android:text="Options"
+        android:textColor="#bdfcf2"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/btn_quit"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="300dp"
+        android:layout_marginRight="300dp"
+        android:background="@drawable/ic_launcher_background"
+        android:text="Quit"
+        android:textColor="#bdfcf2"
+        android:textSize="30dp" />
+</RelativeLayout>
+
