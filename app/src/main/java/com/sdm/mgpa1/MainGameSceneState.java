@@ -11,12 +11,13 @@ import android.widget.Button;
 
 import org.w3c.dom.Entity;
 
+import java.util.Random;
+
 // Created by TanSiewLan2021
 
 public class MainGameSceneState implements StateBase {
     private float timer = 0.0f;
     public static MainGameSceneState Instance = null;
-    private SmurfEntity _smurf;
 
     @Override
     public String GetName() {
@@ -28,15 +29,33 @@ public class MainGameSceneState implements StateBase {
     {
         // 3. Create Background 
         RenderBackground.Create();
+
         EntityPlayer player = EntityPlayer.Create();
         player.Init(_view);
         player.SetPosX(_view.getWidth()/2);
         player.SetPosY(_view.getHeight()/2);
 
+        int diff = _view.getWidth()/3;
+        Random r = new Random();
+        int heightDiff = _view.getHeight()/2;
+        for (int i = 0; i < 3; ++i)
+        {
+            int xStart = diff * (i+1);
+            int xPos = r.nextInt(xStart);
+            int yPos = r.nextInt(heightDiff/2) + heightDiff/2;
+            EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
+            barrel.Init(_view);
+            barrel.xPos = xPos;
+            barrel.yPos = yPos;
+        }
+
         SmurfEntity _smurf = SmurfEntity.Create();
         _smurf.Init(_view);
         RenderTextEntity _text = RenderTextEntity.Create();
-        AudioManager.Instance.PlayAudio(R.raw.gamemusic, 10);
+        _text.Init(_view);
+        EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
+        barrel.Init(_view);
+       // AudioManager.Instance.PlayAudio(R.raw.gamemusic, 40);
         // Example to include another Renderview for Pause Button
     }
 
@@ -52,7 +71,6 @@ public class MainGameSceneState implements StateBase {
     public void Render(Canvas _canvas)
     {
         EntityManager.Instance.Render(_canvas);
-        //EntityPlayer.Instance.Render(_canvas);
     }
 
     @Override

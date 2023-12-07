@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@drawable/gfgg">
+    android:background="@drawable/worm">
 
     <Button
         android:id="@+id/btn_start"
@@ -11,8 +11,8 @@
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="63dp"
-        android:layout_marginRight="300dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginRight="342dp"
         android:background="@drawable/ic_launcher_background"
         android:text="Start"
         android:textColor="#bdfcf2"
@@ -24,8 +24,8 @@
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="183dp"
-        android:layout_marginRight="300dp"
+        android:layout_marginTop="166dp"
+        android:layout_marginRight="335dp"
         android:background="@drawable/ic_launcher_background"
         android:text="Options"
         android:textColor="#bdfcf2"
@@ -37,8 +37,8 @@
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="300dp"
-        android:layout_marginRight="300dp"
+        android:layout_marginTop="289dp"
+        android:layout_marginRight="332dp"
         android:background="@drawable/ic_launcher_background"
         android:text="Quit"
         android:textColor="#bdfcf2"

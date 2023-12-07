@@ -5,11 +5,16 @@ package com.sdm.mgpa1;
 
 import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
+import android.os.VibratorManager;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 
 public class GamePage extends FragmentActivity {
 
     public static GamePage Instance = null;
+
+    private GestureDetector _swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +22,22 @@ public class GamePage extends FragmentActivity {
 
         Instance = this;
 
-        setContentView(new GameView(this)); // Surfaceview = GameView
+        GameView a = new GameView(this);
+        setContentView(a); // Surfaceview = GameView
+
+        SwipeMovement.instance = new SwipeMovement(
+                (VibratorManager) a.getContext().getSystemService(VIBRATOR_MANAGER_SERVICE));
+
+        _swipe = new GestureDetector(this, SwipeMovement.instance);
+        a.setOnTouchListener(touchListener);
     }
+
+    View.OnTouchListener touchListener = new View.OnTouchListener()
+    {
+        @Override
+        public boolean onTouch(View v, MotionEvent event)
+        { return _swipe.onTouchEvent(event); }
+    };
 
     @Override
     public boolean onTouchEvent(MotionEvent event)

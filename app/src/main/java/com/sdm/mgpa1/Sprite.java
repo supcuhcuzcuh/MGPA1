@@ -6,8 +6,8 @@ import android.graphics.Rect;
 public class Sprite {
     private int row = 0;
     private int col = 0;
-    private int width = 0;
-    private int height = 0;
+    private int width = 5;
+    private int height = 5;
 
     private Bitmap bmp = null;
 

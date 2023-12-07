@@ -15,11 +15,13 @@ public class TouchManager {
 
     public enum TouchState{
         NONE,
+        MOVE,
         DOWN,
-        MOVE
+        LEFT,
+        RIGHT,
     }
 
-    private int posX, posY;
+    private float posX, posY;
     private TouchState status = TouchState.NONE; //Set to default as NONE
 
     public boolean HasTouch(){  // Check for a touch status on screen
@@ -30,15 +32,15 @@ public class TouchManager {
         return status == TouchState.DOWN;
     }
 
-    public int GetPosX(){
+    public float GetPosX(){
         return posX;
     }
 
-    public int GetPosY(){
+    public float GetPosY(){
         return posY;
     }
 
-    public void Update(int _posX, int _posY, int _motionEventStatus){
+    public void Update(float _posX, float _posY, int _motionEventStatus){
         posX = _posX;
         posY = _posY;
 
@@ -47,12 +49,11 @@ public class TouchManager {
                 status = TouchState.DOWN;
                 break;
 
-            case MotionEvent.ACTION_MOVE:
-                status = TouchState.MOVE;
-                break;
-
             case MotionEvent.ACTION_UP:
                 status = TouchState.NONE;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
                 break;
         }
     }

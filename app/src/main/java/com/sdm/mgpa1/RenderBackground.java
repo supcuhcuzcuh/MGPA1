@@ -27,7 +27,7 @@ public class RenderBackground implements EntityBase {
     public void Init(SurfaceView _view)
     {
         // load image from the reso0urce
-        bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.gamescene);
+        bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.joshuagamebackground);
         // screen size
         DisplayMetrics metrics = _view.getResources().getDisplayMetrics();
         ScreenWidth = metrics.widthPixels;
@@ -39,11 +39,10 @@ public class RenderBackground implements EntityBase {
     @Override
     public void Update(float _dt)
     {
-        // scrolling background horizontally
-        xPos -= _dt * 500; // to deal with the speed of the scrolling
-        if (xPos < -ScreenWidth)
-        {
-            xPos = 0;
+        // scrolling background vertically (from top to bottom)
+        yPos += _dt * 500; // to deal with the speed of the scrolling
+        if (yPos > ScreenHeight) {
+            yPos = 0;
         }
         //Check if xPos is decreased - screenwidth
         //if so, set xPos to 0, then can start to render the next image.
@@ -57,7 +56,7 @@ public class RenderBackground implements EntityBase {
         //draw the next image.
         //Draw = render
         _canvas.drawBitmap(scaledBmp, xPos, yPos, null);
-        _canvas.drawBitmap(scaledBmp, xPos + ScreenWidth, yPos, null);
+        _canvas.drawBitmap(scaledBmp, xPos, yPos -   ScreenHeight, null);
         //xPos will change and yPos which is set as 0 will be no change.
     }
 

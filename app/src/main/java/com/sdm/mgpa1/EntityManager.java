@@ -1,6 +1,7 @@
 package com.sdm.mgpa1;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceView;
 
 import java.util.Collections;
@@ -61,9 +62,10 @@ public class EntityManager {
             {
                 Collidable first = (Collidable) currEntity;
 
-                for (int j = i+1; j < entityList.size(); ++j)
+                for (int j = 0; j < entityList.size(); ++j)
                 {
                     EntityBase otherEntity = entityList.get(j);
+                    if (otherEntity == currEntity) continue;
 
                     if (otherEntity instanceof Collidable)
                     {

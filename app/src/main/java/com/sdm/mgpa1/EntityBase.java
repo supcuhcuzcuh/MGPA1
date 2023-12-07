@@ -10,10 +10,10 @@ public interface EntityBase
 
     //used for entities such as background
     enum ENTITY_TYPE{
-        //ENT_PLAYER,
-        //ENT_PAUSE,
         //ENT_NEXT,
-
+        //ENT_PAUSE,
+        ENT_BARREL,
+        ENT_PLAYER,
         ENT_TEXT,
         ENT_SMURF,
         ENT_DEFAULT,
