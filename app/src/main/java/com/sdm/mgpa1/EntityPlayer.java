@@ -143,8 +143,11 @@ public class EntityPlayer implements EntityBase, Collidable {
         if (yPos + Camera.Instance.GetY() <= 0)
         {
             Log.d("PLAYER", "HAS DIED");
-            GameOverTextEntity gameOver  = GameOverTextEntity.Create();
-            gameOver.Init(MainGameSceneState.Instance.getView);
+            GameOverTextEntity gameOverText  = GameOverTextEntity.Create();
+            if (gameOverText != null)
+            {
+                gameOverText.Init(GamePage.Instance.currentSceneView);
+            }
             SetIsDone(true);
         }
     }

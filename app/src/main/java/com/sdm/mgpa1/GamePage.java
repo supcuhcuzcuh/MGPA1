@@ -18,6 +18,7 @@ public class GamePage extends FragmentActivity {
     private GestureDetector _swipe;
     public static int relativeX;
     public static int relativeY;
+    public static GameView currentSceneView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class GamePage extends FragmentActivity {
         Instance = this;
 
         GameView a = new GameView(this);
+        currentSceneView = a;
         setContentView(a); // Surfaceview = GameView
 
         DisplayMetrics metrics = a.getResources().getDisplayMetrics();
