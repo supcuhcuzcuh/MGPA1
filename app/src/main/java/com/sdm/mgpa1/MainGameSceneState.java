@@ -15,9 +15,11 @@ import java.util.Random;
 
 // Created by TanSiewLan2021
 
-public class MainGameSceneState implements StateBase {
+public class MainGameSceneState implements StateBase  {
     private float timer = 0.0f;
     public static MainGameSceneState Instance = null;
+
+
 
     @Override
     public String GetName() {

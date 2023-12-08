@@ -28,6 +28,18 @@ public class EntityPlayer implements EntityBase, Collidable {
     private Vibrator _vibrator;
     private GestureDetector _gestureDetector;
 
+    private int score;
+    private int lives;
+
+
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getLives() {
+        return lives;
+    }
     @Override
     public String GetType() {
         return "PlayerEntity";
@@ -92,7 +104,7 @@ public class EntityPlayer implements EntityBase, Collidable {
         while (progress < 1) {
 
             long currentTime = System.currentTimeMillis();
-            progress = Math.min(1, (currentTime - startTime) / duration);
+            progress = Math.min(2, (currentTime - startTime) / duration);
 
             xPos = startX + (targetX - startX) * progress;
             yPos = startY + (targetY - startY) * progress;
@@ -167,6 +179,7 @@ public class EntityPlayer implements EntityBase, Collidable {
         if (_other.GetType() == "EntityBarrel")
         {
             Log.d("COLLISION", "OnHit: BARREL");
+            score += 1;
             //SetIsDone(true);
         }
     }

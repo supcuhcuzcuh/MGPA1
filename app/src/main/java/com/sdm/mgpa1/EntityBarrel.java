@@ -9,7 +9,7 @@ public class EntityBarrel implements EntityBase, Collidable{
     private Bitmap _bitmap = null;
 
     private boolean isDone = false;
-    public float xPos = 960, yPos = 400;
+    public float xPos = 0, yPos = 0;
     private boolean isInit = false;
 
     public static EntityBarrel Instance = null;
@@ -38,7 +38,8 @@ public class EntityBarrel implements EntityBase, Collidable{
     @Override
     public void Init(SurfaceView _view) {
         textureBarrel = ResourceManager.Instance.GetBitmap(R.drawable.barrel);
-        textureBarrel = Bitmap.createScaledBitmap(textureBarrel,textureBarrel.getWidth() / 3,textureBarrel.getHeight() / 3,true);
+        textureBarrel = Bitmap.createScaledBitmap(textureBarrel,
+                textureBarrel.getWidth() / 2, textureBarrel.getHeight() / 2, true);
         //bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.frog);
         Instance = this;
         isInit = true;
@@ -69,8 +70,7 @@ public class EntityBarrel implements EntityBase, Collidable{
 
     @Override
     public float GetRadius() {
-        return textureBarrel.getWidth();
-    }
+        return textureBarrel.getWidth() / 3f;    }
 
     @Override
     public void OnHit(Collidable _other) {

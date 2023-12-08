@@ -1,5 +1,6 @@
 package com.sdm.mgpa1;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.SurfaceView;
@@ -25,6 +26,9 @@ public class RenderTextEntity implements EntityBase {
     private boolean isDone = false;
     private boolean isInit = false;
 
+    EntityPlayer player = EntityPlayer.Instance;
+    int score = player.getScore();
+    int lives = player.getLives();
     @Override
     public boolean IsDone() {
         return isDone;
@@ -55,11 +59,25 @@ public class RenderTextEntity implements EntityBase {
             frameCount = 0;
         }
         frameCount++;
+
+        score = player.getScore();
+        lives = player.getLives();
     }
 
     @Override
     public void Render(Canvas _canvas) {
 
+        // Set font color and size
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(32);
+
+        // Draw FPS
+        paint.setTypeface(myfont);
+        _canvas.drawText("FPS: " + fps, 20, 40, paint);
+
+        // Draw any other text
+        _canvas.drawText("Score: " + score, 20, 80, paint);
+        _canvas.drawText("Lives: " + lives, 20, 120, paint);
     }
 
     @Override
