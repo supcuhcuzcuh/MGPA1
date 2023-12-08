@@ -145,6 +145,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             Log.d("PLAYER", "HAS DIED");
             GameOverTextEntity gameOver  = GameOverTextEntity.Create();
             gameOver.Init(MainGameSceneState.Instance.getView);
+
             SetIsDone(true);
         }
     }
