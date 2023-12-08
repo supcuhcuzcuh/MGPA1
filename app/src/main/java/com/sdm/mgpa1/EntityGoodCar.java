@@ -18,6 +18,7 @@ public class EntityGoodCar implements EntityBase, Collidable{
     private float _sinGen;
 
 
+    public boolean scoreIncremented = false;
     private float speed = 100;
     private Bitmap textureBarrel;
 
@@ -116,10 +117,13 @@ public class EntityGoodCar implements EntityBase, Collidable{
     @Override
     public void SetIsDone(boolean _isDone) {
         isDone = _isDone;
+        if (_isDone) {
+            EntityManager.Instance.RemoveEntity(this);
+        }
     }
     @Override
     public boolean IsInit() {
-        return false;
+        return isInit;
     }
 
     @Override

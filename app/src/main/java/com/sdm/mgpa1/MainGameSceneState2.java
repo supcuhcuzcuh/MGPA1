@@ -114,21 +114,32 @@ public class MainGameSceneState2 implements StateBase  {
 
 
 
-            for (int i = 0; i <= 1; ++i)
+            for (int i = 0; i <= 0; ++i)
             {
                 int xStart = diff * (i+1);
                 int xPos = r.nextInt(xStart);
                 int yPos = r.nextInt(heightDiff/3) + heightDiff/3;
 
 
+                int x2Start = diff * (i+1);
+                int x2Pos = r.nextInt(x2Start);
 
 
                 EntityGoodCar barrel = EntityGoodCar.Create(LayerConstants.BARREL_LAYER);
+
+                EntityBadCar badcar = EntityBadCar.Create(LayerConstants.BARREL_LAYER);
+
+                int speedtemp2 = r.nextInt(200);
+                speedtemp2 = speedtemp2 + 90;
 
                 int speedtemp = r.nextInt(100);
                 speedtemp = speedtemp + 40;
 
 
+                badcar.SetSpeed(speedtemp2);
+                badcar.Init(_getView);
+                badcar.xPos = x2Pos;
+                badcar.yPos = -Camera.Instance.GetY();
 
 
                 barrel.SetSpeed(speedtemp);

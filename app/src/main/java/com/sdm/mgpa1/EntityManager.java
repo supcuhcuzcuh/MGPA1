@@ -115,6 +115,10 @@ public class EntityManager {
         entityList.add(_newEntity);
     }
 
+    public void RemoveEntity(EntityBase entity) {
+        entityList.remove(entity);
+    }
+
     public void Clean()
     {
         entityList.clear();

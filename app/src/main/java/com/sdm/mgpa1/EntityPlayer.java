@@ -82,11 +82,11 @@ public class EntityPlayer implements EntityBase, Collidable {
 
         // Load sprite sheets for idle and moving states
         Bitmap tempIdle = ResourceManager.Instance.GetBitmap(R.drawable.playeridle);
-        tempIdle = Bitmap.createScaledBitmap(tempIdle, tempIdle.getWidth() * 2, tempIdle.getHeight() * 2, true);
+        tempIdle = Bitmap.createScaledBitmap(tempIdle, tempIdle.getWidth() * 2, tempIdle.getHeight() * 2, false);
         spriteSheetIdle = new Sprite(tempIdle, 1, 8, 8);
 
         Bitmap temp = ResourceManager.Instance.GetBitmap(R.drawable.playerhop);
-        temp = Bitmap.createScaledBitmap(temp,temp.getWidth()*2,temp.getHeight()*2,true);
+        temp = Bitmap.createScaledBitmap(temp,temp.getWidth()*2,temp.getHeight()*2,false);
         spriteSheet = new Sprite(temp, 1, 7, 7);
 
         isInit = true;
@@ -250,12 +250,41 @@ public class EntityPlayer implements EntityBase, Collidable {
         if (_other.GetType() == "EntityGoodCar")
         {
             SwipeMovement.Instance.vibrate(2000, 100);
-            score += 20;
+
 
             // Update player position to match car position
             if (_other instanceof EntityGoodCar) {
                 EntityGoodCar carEntity = (EntityGoodCar) _other;
 
+
+                if (carEntity.scoreIncremented == false) {
+                    score += 20;
+
+                    carEntity.scoreIncremented = true;
+                }
+                // Update player position to match car position
+                SetPosX(carEntity.GetPosX());
+                SetPosY(carEntity.GetPosY() - 75);
+            }
+        }
+
+        if (_other.GetType() == "EntityBadCar")
+        {
+            SwipeMovement.Instance.vibrate(2000, 100);
+
+
+
+            // Update player position to match car position
+            if (_other instanceof EntityBadCar) {
+
+
+                EntityBadCar carEntity = (EntityBadCar) _other;
+
+                if (carEntity.scoreIncremented == false) {
+                    lives -= 1;
+
+                    carEntity.scoreIncremented = true;
+                }
                 // Update player position to match car position
                 SetPosX(carEntity.GetPosX());
                 SetPosY(carEntity.GetPosY() - 75);
