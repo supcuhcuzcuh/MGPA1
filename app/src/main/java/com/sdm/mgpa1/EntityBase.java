@@ -16,7 +16,7 @@ public interface EntityBase
         ENT_PLAYER,
         ENT_TEXT,
         ENT_SMURF,
-        ENT_DEFAULT,
+        ENT_DEFAULT, GoodCar,
     }
 
     boolean IsDone();

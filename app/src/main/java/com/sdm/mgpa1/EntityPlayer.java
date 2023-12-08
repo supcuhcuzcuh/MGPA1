@@ -26,7 +26,11 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     public static EntityPlayer Instance = null;
 
+    // Add a boolean to track the player's movement status
+    private boolean isMoving = false;
     public Sprite spriteSheet = null;
+
+    public Sprite spriteSheetIdle = null;
     private int triesCount = 10;
     private Vibrator _vibrator;
     private GestureDetector _gestureDetector;
@@ -62,10 +66,16 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public void Init(SurfaceView _view) {
+
+        // Load sprite sheets for idle and moving states
+        Bitmap tempIdle = ResourceManager.Instance.GetBitmap(R.drawable.playeridle);
+        tempIdle = Bitmap.createScaledBitmap(tempIdle, tempIdle.getWidth() * 2, tempIdle.getHeight() * 2, true);
+        spriteSheetIdle = new Sprite(tempIdle, 1, 8, 8);
+
         Bitmap temp = ResourceManager.Instance.GetBitmap(R.drawable.playerhop);
         temp = Bitmap.createScaledBitmap(temp,temp.getWidth()*2,temp.getHeight()*2,true);
         spriteSheet = new Sprite(temp, 1, 7, 7);
-        //bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.frog);
+
         isInit = true;
         Instance = this;
         _vibrator = (Vibrator)_view.getContext().getSystemService(_view.getContext().VIBRATOR_SERVICE);
@@ -96,6 +106,8 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     public void LerpPosition(float targetX, float targetY, float duration) {
 
+        isMoving = true; // Set the movement status to true
+
         long startTime = System.currentTimeMillis();
         float startX = xPos;
         float startY = yPos;
@@ -116,11 +128,18 @@ public class EntityPlayer implements EntityBase, Collidable {
         }
         xPos = targetX;
         yPos = targetY;
+
+        isMoving = false; // Reset the movement status to false when done moving
     }
 
     @Override
     public void Update(float _dt) {
-        spriteSheet.Update(_dt);
+        if (isMoving) {
+            spriteSheet.Update(_dt);
+        } else {
+            spriteSheetIdle.Update(_dt);
+        }
+
         if (yPos + Camera.Instance.GetY() <= 0)
         {
             Log.d("PLAYER", "HAS DIED");
@@ -134,7 +153,11 @@ public class EntityPlayer implements EntityBase, Collidable {
     public void Render(Canvas _canvas) {
         // basic rendering with image centered
         //_canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
-        spriteSheet.Render(_canvas, (int)xPos * GamePage.relativeX, (int) ((int)yPos + Camera.Instance.GetY()) * GamePage.relativeY);
+        if (isMoving) {
+            spriteSheet.Render(_canvas, (int) xPos * GamePage.relativeX, (int) (yPos + Camera.Instance.GetY()) * GamePage.relativeY);
+        } else {
+            spriteSheetIdle.Render(_canvas, (int) xPos * GamePage.relativeX, (int) (yPos + Camera.Instance.GetY()) * GamePage.relativeY);
+        }
     }
     @Override
     public ENTITY_TYPE GetEntityType() {
