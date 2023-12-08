@@ -26,13 +26,13 @@ public class SwipeMovement extends GestureDetector.SimpleOnGestureListener {
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+    public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY)
     {
-        float x1 = e1.getX();
-        float y1 = e1.getY();
+        float x1 = event1.getX();
+        float y1 = event1.getY();
 
-        float x2 = e2.getX();
-        float y2 = e2.getY();
+        float x2 = event2.getX();
+        float y2 = event2.getY();
 
         Direction direction = getDirection(x1,y1,x2,y2);
         onSwipe.invoke(direction);

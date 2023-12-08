@@ -62,11 +62,9 @@ public class EntityManager {
             {
                 Collidable first = (Collidable) currEntity;
 
-                for (int j = 0; j < entityList.size(); ++j)
+                for (int j = i + 1; j < entityList.size(); ++j)
                 {
                     EntityBase otherEntity = entityList.get(j);
-                    if (otherEntity == currEntity) continue;
-
                     if (otherEntity instanceof Collidable)
                     {
                         Collidable second = (Collidable) otherEntity;
@@ -98,7 +96,6 @@ public class EntityManager {
 
     public void Render(Canvas _canvas)
     {
-      
         // Use the new "rendering layer" to sort the render order
         Collections.sort(entityList, new Comparator<EntityBase>() {
             @Override

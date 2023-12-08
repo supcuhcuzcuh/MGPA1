@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.text.method.Touch;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -14,7 +16,6 @@ import android.os.Vibrator;
 import android.view.View;
 
 public class EntityPlayer implements EntityBase, Collidable {
-    public static EntityPlayer Instance;
     private Bitmap bmp = null;
     private boolean isDone = false;
     private float xPos, yPos;
@@ -23,16 +24,15 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     private boolean hasTouched = false;
 
+    public static EntityPlayer Instance = null;
+
     public Sprite spriteSheet = null;
     private int triesCount = 10;
     private Vibrator _vibrator;
     private GestureDetector _gestureDetector;
-
+    private int levelMultiplier = 20;
     private int score;
-    public int lives;
-
-
-
+    private int lives;
     public int getScore() {
         return score;
     }
@@ -47,11 +47,7 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     public static EntityPlayer Create()
     {
-
-
-
         EntityPlayer result = new EntityPlayer();
-        Instance = result;
         EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_SMURF);
         return result;
     }
@@ -66,35 +62,36 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public void Init(SurfaceView _view) {
-
         Bitmap temp = ResourceManager.Instance.GetBitmap(R.drawable.playerhop);
         temp = Bitmap.createScaledBitmap(temp,temp.getWidth()*2,temp.getHeight()*2,true);
         spriteSheet = new Sprite(temp, 1, 7, 7);
         //bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.frog);
         isInit = true;
-        //_gestureDetector = new GestureDetector(_view.getContext(), this);
-        //_view.setOnTouchListener(this);
+        Instance = this;
         _vibrator = (Vibrator)_view.getContext().getSystemService(_view.getContext().VIBRATOR_SERVICE);
 
+        score = 0;
+        lives  = 5;
         SwipeMovement.instance.onSwipe.subscribe(direction ->
         {
             switch (direction)
             {
                 case left:
-                    LerpPosition(xPos - 200, yPos, 150);
+                    LerpPosition(xPos - 200, yPos, 500);
                     break;
                 case right:
-                    LerpPosition(xPos + 200, yPos, 150);
+                    LerpPosition(xPos + 200, yPos, 500);
                     break;
                 case up:
-                    LerpPosition(xPos, yPos - 200, 150);
+                    LerpPosition(xPos, yPos - 200, 500);
                     break;
                 case down:
-                    LerpPosition(xPos, yPos + 200, 150);
+                    LerpPosition(xPos, yPos + 200, 500);
                     break;
             }
         });
-
+        DisplayMetrics metrics = _view.getResources().getDisplayMetrics();
+        Log.d("METRICS", Integer.toString(metrics.widthPixels));
     }
 
     public void LerpPosition(float targetX, float targetY, float duration) {
@@ -117,23 +114,25 @@ public class EntityPlayer implements EntityBase, Collidable {
             // Can add a sleep here to control lerp speed
 
         }
-
         xPos = targetX;
         yPos = targetY;
-
     }
 
     @Override
     public void Update(float _dt) {
         spriteSheet.Update(_dt);
-
+        if (yPos + Camera.Instance.GetY() <= 0)
+        {
+            Log.d("PLAYER", "HAS DIED");
+            SetIsDone(true);
+        }
     }
 
     @Override
     public void Render(Canvas _canvas) {
         // basic rendering with image centered
         //_canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
-        spriteSheet.Render(_canvas, (int)xPos, (int)yPos);
+        spriteSheet.Render(_canvas, (int)xPos, (int) ((int)yPos + Camera.Instance.GetY()));
     }
     @Override
     public ENTITY_TYPE GetEntityType() {
@@ -157,7 +156,7 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public float GetRadius() {
-        return 1;
+        return 0;
     }
 
     public void startVibrate()
@@ -184,10 +183,12 @@ public class EntityPlayer implements EntityBase, Collidable {
         if (_other.GetType() == "EntityBarrel")
         {
             Log.d("COLLISION", "OnHit: BARREL");
-            score += 1;
-            //SetIsDone(true);
+            lives -= 1;
         }
-
+        if (_other.GetType() == "EntityCoin")
+        {
+            score += 20;
+        }
     }
 
     @Override

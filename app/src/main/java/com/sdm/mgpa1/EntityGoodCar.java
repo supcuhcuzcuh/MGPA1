@@ -52,7 +52,7 @@ public class EntityGoodCar implements EntityBase, Collidable{
 
         if(Collision.CircleToRectangle(EntityPlayer.Instance.GetPosX(), EntityPlayer.Instance.GetPosY(),EntityPlayer.Instance.GetRadius(), xPos,yPos,_bitmap.getWidth(),_bitmap.getHeight()))
         {
-            
+
 
 
         }
