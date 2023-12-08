@@ -11,8 +11,8 @@ public class EntityCoin implements EntityBase, Collidable
 {
     private Bitmap bmp = null;
     private boolean isDone = false;
-    private float xPos, yPos;
-    private  boolean isInit = false;
+    public float xPos, yPos;
+    private boolean isInit = false;
     @Override
     public String GetType() {
         return "EntityCoin";
@@ -37,8 +37,6 @@ public class EntityCoin implements EntityBase, Collidable
     {
         bmp = ResourceManager.Instance.GetBitmap(R.drawable.coins);
         bmp = Bitmap.createScaledBitmap(bmp,bmp.getWidth() / 5,bmp.getHeight() / 5,true);
-        xPos = 600;
-        yPos = 200;
     }
 
     @Override
@@ -49,7 +47,9 @@ public class EntityCoin implements EntityBase, Collidable
     @Override
     public void Render(Canvas _canvas)
     {
-        _canvas.drawBitmap(bmp, xPos * GamePage.relativeX, yPos + Camera.Instance.GetY() * GamePage.relativeY, null);
+        float centerX = xPos - bmp.getWidth() / 2f;
+        float centerY = yPos - bmp.getHeight() / 2f;
+        _canvas.drawBitmap(bmp, centerX * GamePage.relativeX, centerY + Camera.Instance.GetY() * GamePage.relativeY, null);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class EntityCoin implements EntityBase, Collidable
 
     @Override
     public float GetRadius() {
-        return bmp.getWidth() ;
+        return bmp.getWidth() / 2;
     }
 
     @Override

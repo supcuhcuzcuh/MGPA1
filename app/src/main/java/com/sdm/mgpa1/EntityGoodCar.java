@@ -45,8 +45,6 @@ public class EntityGoodCar implements EntityBase, Collidable{
         speed = num;
     }
 
-
-
     @Override
     public void Init(SurfaceView _view) {
         textureBarrel = ResourceManager.Instance.GetBitmap(R.drawable.electriccar);

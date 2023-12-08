@@ -120,16 +120,10 @@ public class MainGameSceneState2 implements StateBase  {
                 int xPos = r.nextInt(xStart);
                 int yPos = r.nextInt(heightDiff/3) + heightDiff/3;
 
-
-
-
                 EntityGoodCar barrel = EntityGoodCar.Create(LayerConstants.BARREL_LAYER);
 
                 int speedtemp = r.nextInt(100);
                 speedtemp = speedtemp + 40;
-
-
-
 
                 barrel.SetSpeed(speedtemp);
                 barrel.Init(_getView);
