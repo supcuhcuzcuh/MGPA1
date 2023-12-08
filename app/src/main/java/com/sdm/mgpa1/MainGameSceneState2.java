@@ -37,8 +37,8 @@ public class MainGameSceneState2 implements StateBase  {
 
         EntityPlayer player = EntityPlayer.Create();
         player.Init(_view);
-        player.SetPosX(_view.getWidth()/2);
-        player.SetPosY(_view.getHeight()/2);
+        player.SetPosX(500);
+        player.SetPosY(900);
 
         int diff = _getView.getWidth()/2;
         Random r = new Random();

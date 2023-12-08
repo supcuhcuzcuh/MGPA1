@@ -15,6 +15,7 @@ public class EntityBarrel implements EntityBase, Collidable{
     private boolean isInit = false;
 
     public static EntityBarrel Instance = null;
+    private float _sinGen;
 
     private Bitmap textureBarrel;
 

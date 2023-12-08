@@ -7,8 +7,8 @@ import android.view.SurfaceView;
 
 import androidx.constraintlayout.helper.widget.Layer;
 
-public class EntityCoin implements EntityBase, Collidable {
-
+public class EntityCoin implements EntityBase, Collidable
+{
     private Bitmap bmp = null;
     private boolean isDone = false;
     private float xPos, yPos;
