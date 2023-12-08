@@ -53,8 +53,11 @@ public class EntityBarrel implements EntityBase, Collidable{
     }
 
     @Override
-    public void Render(Canvas _canvas) {
-        _canvas.drawBitmap(textureBarrel, xPos, yPos,null);
+    public void Render(Canvas _canvas)
+    {
+        float centerX = xPos - textureBarrel.getWidth() / 2f;
+        float centerY = yPos - textureBarrel.getHeight() / 2f;
+        _canvas.drawBitmap(textureBarrel, centerX, centerY, null);
     }
 
 

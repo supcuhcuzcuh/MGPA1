@@ -37,10 +37,10 @@ public class MainGameSceneState implements StateBase  {
         player.SetPosX(_view.getWidth()/2);
         player.SetPosY(_view.getHeight()/2);
 
-        int diff = _view.getWidth()/3;
+        int diff = _view.getWidth()/2;
         Random r = new Random();
         int heightDiff = _view.getHeight()/2;
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i <= 1; ++i)
         {
             int xStart = diff * (i+1);
             int xPos = r.nextInt(xStart);
@@ -55,8 +55,6 @@ public class MainGameSceneState implements StateBase  {
 //        _smurf.Init(_view);
         RenderTextEntity _text = RenderTextEntity.Create();
         _text.Init(_view);
-        EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
-        barrel.Init(_view);
 
         EntityCoin coin = EntityCoin.Create(LayerConstants.COIN_LAYER);
         coin.Init(_view);

@@ -22,6 +22,8 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     private boolean hasTouched = false;
 
+    public static EntityPlayer Instance = null;
+
     public Sprite spriteSheet = null;
     private int triesCount = 10;
     private Vibrator _vibrator;
@@ -66,6 +68,7 @@ public class EntityPlayer implements EntityBase, Collidable {
         spriteSheet = new Sprite(temp, 1, 7, 7);
         //bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.frog);
         isInit = true;
+        Instance = this;
         //_gestureDetector = new GestureDetector(_view.getContext(), this);
         //_view.setOnTouchListener(this);
         _vibrator = (Vibrator)_view.getContext().getSystemService(_view.getContext().VIBRATOR_SERVICE);
@@ -111,10 +114,8 @@ public class EntityPlayer implements EntityBase, Collidable {
             // Can add a sleep here to control lerp speed
 
         }
-
         xPos = targetX;
         yPos = targetY;
-
     }
 
     @Override
@@ -181,11 +182,11 @@ public class EntityPlayer implements EntityBase, Collidable {
             score += 1;
             //SetIsDone(true);
         }
-        if (_other.GetType() == "EntityCoin")
-        {
-            SetIsDone(true);
-            Log.d("COLLISION", "OnHit: COINS");
-        }
+//        if (_other.GetType() == "EntityCoin")
+//        {
+//            score += 1;
+//            Log.d("COLLISION", "OnHit: COINS");
+//        }
     }
 
     @Override

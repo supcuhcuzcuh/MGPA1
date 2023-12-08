@@ -2,6 +2,7 @@ package com.sdm.mgpa1;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceView;
 
 public class EntityCoin implements EntityBase, Collidable {
@@ -63,12 +64,17 @@ public class EntityCoin implements EntityBase, Collidable {
 
     @Override
     public float GetRadius() {
-        return bmp.getWidth();
+        return bmp.getWidth() ;
     }
 
     @Override
-    public void OnHit(Collidable _other) {
-
+    public void OnHit(Collidable _other)
+    {
+        Log.d("COIN", "COLLIDED WITH PLAYER ENTITY");
+        if (_other.GetType() == "PlayerEntity")
+        {
+            SetIsDone(true);
+        }
     }
 
     @Override
