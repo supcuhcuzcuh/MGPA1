@@ -37,6 +37,12 @@ public class EntityPlayer implements EntityBase, Collidable {
     private int levelMultiplier = 20;
     private int score;
     private int lives;
+    private int garbageCollected;
+
+    public int getGarbageCollected()
+    {
+        return garbageCollected;
+    }
 
     private float lerppos = 200;
 
@@ -89,7 +95,7 @@ public class EntityPlayer implements EntityBase, Collidable {
 
         score = 0;
         lives  = 5;
-        SwipeMovement.instance.onSwipe.subscribe(direction ->
+        SwipeMovement.Instance.onSwipe.subscribe(direction ->
         {
             switch (direction)
             {
@@ -157,7 +163,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             spriteSheetIdle.Update(_dt);
         }
 
-        if (yPos + Camera.Instance.GetY() <= 0)
+        if (yPos + Camera.Instance.GetY() <= 0 || lives <= 0)
         {
             Log.d("PLAYER", "HAS DIED");
             GameOverTextEntity gameOverText  = GameOverTextEntity.Create();
@@ -237,11 +243,13 @@ public class EntityPlayer implements EntityBase, Collidable {
         }
         if (_other.GetType() == "EntityBarrel")
         {
+            SwipeMovement.Instance.vibrate(2000, 100);
             Log.d("COLLISION", "OnHit: BARREL");
             lives -= 1;
         }
         if (_other.GetType() == "EntityGoodCar")
         {
+            SwipeMovement.Instance.vibrate(2000, 100);
             score += 20;
 
             // Update player position to match car position
@@ -251,6 +259,21 @@ public class EntityPlayer implements EntityBase, Collidable {
                 // Update player position to match car position
                 SetPosX(carEntity.GetPosX());
                 SetPosY(carEntity.GetPosY() - 75);
+            }
+        }
+        if (_other.GetType() == "EntityGarbage")
+        {
+            garbageCollected += 1;
+        }
+        if (_other.GetType() == "EntityLog")
+        {
+            // Update player position to match car position
+            if (_other instanceof EntityLog) {
+                EntityLog log = (EntityLog) _other;
+
+                // Update player position to match car position
+                SetPosX(log.GetPosX() - 50 * GamePage.relativeX);
+                SetPosY(log.GetPosY() - 50);
             }
         }
 

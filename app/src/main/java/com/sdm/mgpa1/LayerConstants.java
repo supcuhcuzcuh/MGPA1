@@ -15,6 +15,8 @@ public class LayerConstants {
     public final static int COIN_LAYER = 30;
     public final static int BARREL_LAYER = 40;
     public final static int PLAYER_LAYER = 50;
-    public final static int SMURF_LAYER = 60;
+    public final static int GARBAGE_LAYER = 60;
+    public final static int LOG_LAYER = 70;
+    public final static int SMURF_LAYER = 80;
     public final static int UI_LAYER = 1000;
 }

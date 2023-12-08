@@ -8,16 +8,12 @@ import android.view.SurfaceView;
 import java.util.Set;
 
 public class EntityBarrel implements EntityBase, Collidable{
-    private Bitmap _bitmap = null;
-
     private boolean isDone = false;
     public float xPos = 0, yPos = 0;
     private boolean isInit = false;
 
     public static EntityBarrel Instance = null;
-    private float _sinGen;
-
-    private Bitmap textureBarrel;
+    private Bitmap textureBarrel = null;
 
     @Override
     public String GetType() {
@@ -79,7 +75,7 @@ public class EntityBarrel implements EntityBase, Collidable{
 
     @Override
     public float GetRadius() {
-        return textureBarrel.getWidth() / 3f; }
+        return textureBarrel.getWidth() / 8f; }
 
     @Override
     public void OnHit(Collidable _other)
