@@ -51,12 +51,15 @@ public class MainGameSceneState implements StateBase  {
             barrel.yPos = yPos;
         }
 
-        SmurfEntity _smurf = SmurfEntity.Create();
-        _smurf.Init(_view);
+//        SmurfEntity _smurf = SmurfEntity.Create();
+//        _smurf.Init(_view);
         RenderTextEntity _text = RenderTextEntity.Create();
         _text.Init(_view);
         EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
         barrel.Init(_view);
+
+        EntityCoin coin = EntityCoin.Create(LayerConstants.COIN_LAYER);
+        coin.Init(_view);
        // AudioManager.Instance.PlayAudio(R.raw.gamemusic, 40);
         // Example to include another Renderview for Pause Button
     }

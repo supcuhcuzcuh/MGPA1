@@ -46,9 +46,9 @@ public class EntityBarrel implements EntityBase, Collidable{
         //_gestureDetector = new GestureDetector(_view.getContext(), this);
         //_view.setOnTouchListener(this)
     }
-
     @Override
-    public void Update(float _dt) {
+    public void Update(float _dt)
+    {
 
     }
 
@@ -97,7 +97,7 @@ public class EntityBarrel implements EntityBase, Collidable{
     }
 
     @Override
-    public void SetRenderLayer(int _newLayer) {
+    public void SetRenderLayer(int _newLayer){
 
     }
 
