@@ -3,6 +3,7 @@ package com.sdm.mgpa1;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.SurfaceView;
 
 import java.util.Set;
@@ -15,11 +16,17 @@ public class EntityBarrel implements EntityBase, Collidable{
     public static EntityBarrel Instance = null;
     private Bitmap textureBarrel = null;
 
+    private float speed = 100;
+
     @Override
     public String GetType() {
         return "EntityBarrel";
     }
 
+    public void SetSpeed(int num )
+    {
+        speed = num;
+    }
     public static EntityBarrel Create()
     {
         EntityBarrel result = new EntityBarrel();
@@ -48,8 +55,15 @@ public class EntityBarrel implements EntityBase, Collidable{
     @Override
     public void Update(float _dt)
     {
+//        xPos += speed * _dt;
+//
+//        if (xPos >= 1000 * GamePage.relativeX){
+//            SetIsDone(true);
+//        }
+
         if (yPos + Camera.Instance.GetY() <= 0)
         {
+            Log.d("COLLISION", "BARREL PASS AWAYYYYYYY");
             SetIsDone(true);
         }
     }
@@ -75,29 +89,37 @@ public class EntityBarrel implements EntityBase, Collidable{
 
     @Override
     public float GetRadius() {
-        return textureBarrel.getWidth() / 8f; }
+        return textureBarrel.getWidth() / 2f;
+    }
 
     @Override
     public void OnHit(Collidable _other)
     {
         if (_other.GetType() == "PlayerEntity")
         {
-            SetIsDone(true);
-        }
+        Log.d("COLLIDABLE", "log collide");
+        SetIsDone(true);
     }
+}
 
     @Override
-    public boolean IsDone() {
+    public boolean IsDone()
+    {
         return isDone;
     }
 
     @Override
-    public void SetIsDone(boolean _isDone) {
-        isDone = _isDone;
+    public void SetIsDone(boolean _isDone)
+    {
+        if (_isDone)
+        {
+            //isDone = _isDone;
+            EntityManager.Instance.RemoveEntity(this);
+        }
     }
     @Override
     public boolean IsInit() {
-        return false;
+        return isInit;
     }
 
     @Override

@@ -34,7 +34,7 @@ public class EntityGarbage implements EntityBase, Collidable
     public void Init(SurfaceView _view)
     {
         bmp = ResourceManager.Instance.GetBitmap(R.drawable.garbage);
-        bmp = Bitmap.createScaledBitmap(bmp,bmp.getWidth() / 8,bmp.getHeight() /8,true);
+        bmp = Bitmap.createScaledBitmap(bmp,bmp.getWidth() / 4,bmp.getHeight() / 4,true);
     }
 
     @Override
@@ -64,8 +64,9 @@ public class EntityGarbage implements EntityBase, Collidable
     }
 
     @Override
-    public float GetRadius() {
-        return bmp.getWidth() / 2;
+    public float GetRadius()
+    {
+        return (bmp.getWidth() / 1.5f);
     }
     @Override
     public void OnHit(Collidable _other)
@@ -85,12 +86,17 @@ public class EntityGarbage implements EntityBase, Collidable
         return LayerConstants.GARBAGE_LAYER;
     }
     @Override
-    public void SetIsDone(boolean _isDone) {
-        isDone = _isDone;
+    public void SetIsDone(boolean _isDone)
+    {
+        if (_isDone)
+        {
+            //isDone = _isDone;
+            EntityManager.Instance.RemoveEntity(this);
+        }
     }
     @Override
     public boolean IsInit() {
-        return false;
+        return isInit;
     }
 
     @Override

@@ -74,9 +74,6 @@ public class EntityManager {
                             first.OnHit(second);
                             second.OnHit(first);
                         }
-
-
-
                     }
                 }
             }
@@ -118,7 +115,6 @@ public class EntityManager {
     public void RemoveEntity(EntityBase entity) {
         entityList.remove(entity);
     }
-
     public void Clean()
     {
         entityList.clear();

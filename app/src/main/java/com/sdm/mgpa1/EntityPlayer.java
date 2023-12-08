@@ -45,11 +45,16 @@ public class EntityPlayer implements EntityBase, Collidable {
     }
 
     private float lerppos = 200;
+    private float _movementSpeed = 500;
 
     // Add variables to keep track of the lerp modification
     private boolean isPowerupLerpActive = false;
     private long powerupLerpStartTime = 0;
     private long powerupLerpDuration = 3000; // Duration in milliseconds (adjust as needed)
+
+    private boolean isPowerupFastActive = false;
+    private long powerupFastStartTime = 0;
+    private long powerupFastDuration = 3000; // Duration in milliseconds (adjust as needed)
     public int getScore() {
         return score;
     }
@@ -100,16 +105,16 @@ public class EntityPlayer implements EntityBase, Collidable {
             switch (direction)
             {
                 case left:
-                    LerpPosition(xPos - lerppos, yPos, 500);
+                    LerpPosition(xPos - lerppos, yPos,  _movementSpeed);
                     break;
                 case right:
-                    LerpPosition(xPos + lerppos, yPos, 500);
+                    LerpPosition(xPos + lerppos, yPos, _movementSpeed);
                     break;
                 case up:
-                    LerpPosition(xPos, yPos - lerppos, 500);
+                    LerpPosition(xPos, yPos - lerppos, + _movementSpeed);
                     break;
                 case down:
-                    LerpPosition(xPos, yPos + lerppos, 500);
+                    LerpPosition(xPos, yPos + lerppos,  + _movementSpeed);
                     break;
             }
         });
@@ -154,6 +159,16 @@ public class EntityPlayer implements EntityBase, Collidable {
                 // Powerup effect has ended, reset lerppos to 200
                 lerppos = 200;
                 isPowerupLerpActive = false;
+            }
+        }
+
+        if (isPowerupFastActive) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - powerupFastStartTime >= powerupFastDuration) {
+                // Powerup effect has ended, reset lerppos to 200
+                Log.d("power", "activated");
+                _movementSpeed = 500;
+                isPowerupFastActive = false;
             }
         }
 
@@ -241,11 +256,15 @@ public class EntityPlayer implements EntityBase, Collidable {
             SetIsDone(true);
             AudioManager.Instance.PlayAudio(R.raw.trollsound, 200);
         }
+        if (_other.GetType() == "EntityCoin")
+        {
+            score += 5;
+        }
         if (_other.GetType() == "EntityBarrel")
         {
             SwipeMovement.Instance.vibrate(2000, 100);
             Log.d("COLLISION", "OnHit: BARREL");
-            lives -= 1;
+            //lives -= 1;
         }
         if (_other.GetType() == "EntityGoodCar")
         {
@@ -305,7 +324,13 @@ public class EntityPlayer implements EntityBase, Collidable {
                 SetPosY(log.GetPosY() - 50);
             }
         }
+        if (_other.GetType() == "MovementPowerUp")
+        {
+            _movementSpeed = 100;
 
+            isPowerupFastActive = true;
+            powerupFastStartTime = System.currentTimeMillis();
+        }
         if (_other.GetType() == "Powerup") {
             Log.d("COLLISION", "OnHit: POWERUP ENTITY");
 
@@ -315,12 +340,8 @@ public class EntityPlayer implements EntityBase, Collidable {
             // Activate powerup lerp
             isPowerupLerpActive = true;
             powerupLerpStartTime = System.currentTimeMillis();
-
             // Perform any other actions related to powerup collision
-
         }
-
-
     }
 
     @Override
