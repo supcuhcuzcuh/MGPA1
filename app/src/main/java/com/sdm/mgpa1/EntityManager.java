@@ -76,6 +76,9 @@ public class EntityManager {
                             first.OnHit(second);
                             second.OnHit(first);
                         }
+
+
+
                     }
                 }
             }

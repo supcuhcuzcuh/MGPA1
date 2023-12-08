@@ -30,6 +30,8 @@ public class GameSystem {
         StateManager.Instance.AddState(new NextPage());
         // Plese add state, MainGameSceneState.
         StateManager.Instance.AddState(new MainGameSceneState());
+
+        StateManager.Instance.AddState(new MainGameSceneState2());
         
     }
 

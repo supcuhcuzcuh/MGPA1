@@ -14,6 +14,7 @@ import android.os.Vibrator;
 import android.view.View;
 
 public class EntityPlayer implements EntityBase, Collidable {
+    public static EntityPlayer Instance;
     private Bitmap bmp = null;
     private boolean isDone = false;
     private float xPos, yPos;
@@ -28,7 +29,7 @@ public class EntityPlayer implements EntityBase, Collidable {
     private GestureDetector _gestureDetector;
 
     private int score;
-    private int lives;
+    public int lives;
 
 
 
@@ -46,7 +47,11 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     public static EntityPlayer Create()
     {
+
+
+
         EntityPlayer result = new EntityPlayer();
+        Instance = result;
         EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_SMURF);
         return result;
     }
@@ -61,6 +66,7 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public void Init(SurfaceView _view) {
+
         Bitmap temp = ResourceManager.Instance.GetBitmap(R.drawable.playerhop);
         temp = Bitmap.createScaledBitmap(temp,temp.getWidth()*2,temp.getHeight()*2,true);
         spriteSheet = new Sprite(temp, 1, 7, 7);
@@ -75,16 +81,16 @@ public class EntityPlayer implements EntityBase, Collidable {
             switch (direction)
             {
                 case left:
-                    LerpPosition(xPos - 200, yPos, 500);
+                    LerpPosition(xPos - 200, yPos, 150);
                     break;
                 case right:
-                    LerpPosition(xPos + 200, yPos, 500);
+                    LerpPosition(xPos + 200, yPos, 150);
                     break;
                 case up:
-                    LerpPosition(xPos, yPos - 200, 500);
+                    LerpPosition(xPos, yPos - 200, 150);
                     break;
                 case down:
-                    LerpPosition(xPos, yPos + 200, 500);
+                    LerpPosition(xPos, yPos + 200, 150);
                     break;
             }
         });
@@ -151,7 +157,7 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public float GetRadius() {
-        return 0;
+        return 1;
     }
 
     public void startVibrate()
@@ -181,11 +187,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             score += 1;
             //SetIsDone(true);
         }
-        if (_other.GetType() == "EntityCoin")
-        {
-            SetIsDone(true);
-            Log.d("COLLISION", "OnHit: COINS");
-        }
+
     }
 
     @Override

@@ -28,7 +28,7 @@ public class RenderTextEntity implements EntityBase {
 
     EntityPlayer player = EntityPlayer.Instance;
     int score = player.getScore();
-    int lives = player.getLives();
+    int lives = player.lives;
     @Override
     public boolean IsDone() {
         return isDone;
@@ -69,7 +69,7 @@ public class RenderTextEntity implements EntityBase {
 
         // Set font color and size
         paint.setColor(Color.WHITE);
-        paint.setTextSize(32);
+        paint.setTextSize(60);
 
         // Draw FPS
         paint.setTypeface(myfont);
