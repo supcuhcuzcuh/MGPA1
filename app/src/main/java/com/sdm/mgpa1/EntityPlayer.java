@@ -63,36 +63,52 @@ public class EntityPlayer implements EntityBase, Collidable {
             switch (direction)
             {
                 case left:
-                    xPos -= 200;
+                    LerpPosition(xPos - 200, yPos, 500);
                     break;
                 case right:
-                    xPos += 200;
+                    LerpPosition(xPos + 200, yPos, 500);
                     break;
                 case up:
-                    yPos -= 200;
+                    LerpPosition(xPos, yPos - 200, 500);
                     break;
                 case down:
-                    yPos +=200;
+                    LerpPosition(xPos, yPos + 200, 500);
                     break;
             }
         });
+
+    }
+
+    public void LerpPosition(float targetX, float targetY, float duration) {
+
+        long startTime = System.currentTimeMillis();
+        float startX = xPos;
+        float startY = yPos;
+
+        float progress = 0;
+
+        while (progress < 1) {
+
+            long currentTime = System.currentTimeMillis();
+            progress = Math.min(1, (currentTime - startTime) / duration);
+
+            xPos = startX + (targetX - startX) * progress;
+            yPos = startY + (targetY - startY) * progress;
+
+            // Render frame
+            // Can add a sleep here to control lerp speed
+
+        }
+
+        xPos = targetX;
+        yPos = targetY;
+
     }
 
     @Override
     public void Update(float _dt) {
         spriteSheet.Update(_dt);
-//        if (TouchManager.Instance.HasTouch()) {
-//            // check collision here
-//            float imgRadius = spriteSheet.GetWidth() * 0.5f;
-//            if (Collision.SphereToSphere(TouchManager.Instance.GetPosX(),
-//                    TouchManager.Instance.GetPosY(), 0.0f, xPos, yPos, imgRadius) || hasTouched)
-//            {
-//                // collided
-//                hasTouched = true;
-//                xPos = TouchManager.Instance.GetPosX();
-//                yPos = TouchManager.Instance.GetPosY();
-//            }
-//        }
+
     }
 
     @Override
