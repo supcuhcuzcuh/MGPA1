@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.text.method.Touch;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -28,12 +30,9 @@ public class EntityPlayer implements EntityBase, Collidable {
     private int triesCount = 10;
     private Vibrator _vibrator;
     private GestureDetector _gestureDetector;
-
+    private int levelMultiplier = 20;
     private int score;
     private int lives;
-
-
-
     public int getScore() {
         return score;
     }
@@ -69,10 +68,10 @@ public class EntityPlayer implements EntityBase, Collidable {
         //bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.frog);
         isInit = true;
         Instance = this;
-        //_gestureDetector = new GestureDetector(_view.getContext(), this);
-        //_view.setOnTouchListener(this);
         _vibrator = (Vibrator)_view.getContext().getSystemService(_view.getContext().VIBRATOR_SERVICE);
 
+        score = 0;
+        lives  = 5;
         SwipeMovement.instance.onSwipe.subscribe(direction ->
         {
             switch (direction)
@@ -91,7 +90,8 @@ public class EntityPlayer implements EntityBase, Collidable {
                     break;
             }
         });
-
+        DisplayMetrics metrics = _view.getResources().getDisplayMetrics();
+        Log.d("METRICS", Integer.toString(metrics.widthPixels));
     }
 
     public void LerpPosition(float targetX, float targetY, float duration) {
@@ -121,14 +121,18 @@ public class EntityPlayer implements EntityBase, Collidable {
     @Override
     public void Update(float _dt) {
         spriteSheet.Update(_dt);
-
+        if (yPos + Camera.Instance.GetY() <= 0)
+        {
+            Log.d("PLAYER", "HAS DIED");
+            SetIsDone(true);
+        }
     }
 
     @Override
     public void Render(Canvas _canvas) {
         // basic rendering with image centered
         //_canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
-        spriteSheet.Render(_canvas, (int)xPos, (int)yPos);
+        spriteSheet.Render(_canvas, (int)xPos, (int) ((int)yPos + Camera.Instance.GetY()));
     }
     @Override
     public ENTITY_TYPE GetEntityType() {
@@ -179,14 +183,12 @@ public class EntityPlayer implements EntityBase, Collidable {
         if (_other.GetType() == "EntityBarrel")
         {
             Log.d("COLLISION", "OnHit: BARREL");
-            score += 1;
-            //SetIsDone(true);
+            lives -= 1;
         }
-//        if (_other.GetType() == "EntityCoin")
-//        {
-//            score += 1;
-//            Log.d("COLLISION", "OnHit: COINS");
-//        }
+        if (_other.GetType() == "EntityCoin")
+        {
+            score += 20;
+        }
     }
 
     @Override

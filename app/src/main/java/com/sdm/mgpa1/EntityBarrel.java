@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.os.Vibrator;
 import android.view.SurfaceView;
 
+import java.util.Set;
+
 public class EntityBarrel implements EntityBase, Collidable{
     private Bitmap _bitmap = null;
 
@@ -39,7 +41,7 @@ public class EntityBarrel implements EntityBase, Collidable{
     public void Init(SurfaceView _view) {
         textureBarrel = ResourceManager.Instance.GetBitmap(R.drawable.barrel);
         textureBarrel = Bitmap.createScaledBitmap(textureBarrel,
-                textureBarrel.getWidth() / 2, textureBarrel.getHeight() / 2, true);
+                textureBarrel.getWidth() / 4, textureBarrel.getHeight() / 4, true);
         //bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.frog);
         Instance = this;
         isInit = true;
@@ -49,7 +51,10 @@ public class EntityBarrel implements EntityBase, Collidable{
     @Override
     public void Update(float _dt)
     {
-
+        if (yPos + Camera.Instance.GetY() <= 0)
+        {
+            SetIsDone(true);
+        }
     }
 
     @Override
@@ -57,7 +62,7 @@ public class EntityBarrel implements EntityBase, Collidable{
     {
         float centerX = xPos - textureBarrel.getWidth() / 2f;
         float centerY = yPos - textureBarrel.getHeight() / 2f;
-        _canvas.drawBitmap(textureBarrel, centerX, centerY, null);
+        _canvas.drawBitmap(textureBarrel, centerX, centerY + Camera.Instance.GetY(), null);
     }
 
 
@@ -73,21 +78,25 @@ public class EntityBarrel implements EntityBase, Collidable{
 
     @Override
     public float GetRadius() {
-        return textureBarrel.getWidth() / 3f;    }
+        return textureBarrel.getWidth() / 3f; }
 
     @Override
-    public void OnHit(Collidable _other) {
-
+    public void OnHit(Collidable _other)
+    {
+        if (_other.GetType() == "PlayerEntity")
+        {
+            SetIsDone(true);
+        }
     }
 
     @Override
     public boolean IsDone() {
-        return false;
+        return isDone;
     }
 
     @Override
     public void SetIsDone(boolean _isDone) {
-
+        isDone = _isDone;
     }
     @Override
     public boolean IsInit() {

@@ -5,13 +5,14 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceView;
 
+import androidx.constraintlayout.helper.widget.Layer;
+
 public class EntityCoin implements EntityBase, Collidable {
 
     private Bitmap bmp = null;
     private boolean isDone = false;
     private float xPos, yPos;
     private  boolean isInit = false;
-
     public Sprite spriteSheet;
 
     @Override
@@ -48,8 +49,9 @@ public class EntityCoin implements EntityBase, Collidable {
     }
 
     @Override
-    public void Render(Canvas _canvas) {
-        _canvas.drawBitmap(bmp, xPos, yPos, null);
+    public void Render(Canvas _canvas)
+    {
+        _canvas.drawBitmap(bmp, xPos, yPos + Camera.Instance.GetY(), null);
     }
 
     @Override
@@ -70,21 +72,21 @@ public class EntityCoin implements EntityBase, Collidable {
     @Override
     public void OnHit(Collidable _other)
     {
-        Log.d("COIN", "COLLIDED WITH PLAYER ENTITY");
         if (_other.GetType() == "PlayerEntity")
         {
+            Log.d("COIN", "COLLIDED WITH PLAYER ENTITY");
             SetIsDone(true);
         }
     }
 
     @Override
     public boolean IsDone() {
-        return false;
+        return isDone;
     }
 
     @Override
     public void SetIsDone(boolean _isDone) {
-
+        isDone = _isDone;
     }
 
 
@@ -94,9 +96,7 @@ public class EntityCoin implements EntityBase, Collidable {
     }
 
     @Override
-    public int GetRenderLayer() {
-        return 0;
-    }
+    public int GetRenderLayer() { return LayerConstants.COIN_LAYER;}
 
     @Override
     public void SetRenderLayer(int _newLayer) {

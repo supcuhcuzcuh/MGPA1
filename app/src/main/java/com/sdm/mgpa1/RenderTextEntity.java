@@ -69,15 +69,15 @@ public class RenderTextEntity implements EntityBase {
 
         // Set font color and size
         paint.setColor(Color.WHITE);
-        paint.setTextSize(32);
+        paint.setTextSize(80);
 
         // Draw FPS
         paint.setTypeface(myfont);
-        _canvas.drawText("FPS: " + fps, 20, 40, paint);
+        _canvas.drawText("FPS: " + fps, 1880, 70, paint);
 
         // Draw any other text
-        _canvas.drawText("Score: " + score, 20, 80, paint);
-        _canvas.drawText("Lives: " + lives, 20, 120, paint);
+        _canvas.drawText("Score: " + score, 1880, 170, paint);
+        _canvas.drawText("Lives: " + lives, 1880, 270, paint);
     }
 
     @Override

@@ -30,6 +30,8 @@ public class GamePage extends FragmentActivity {
 
         _swipe = new GestureDetector(this, SwipeMovement.instance);
         a.setOnTouchListener(touchListener);
+
+        Camera.Instance = new Camera();
     }
 
     View.OnTouchListener touchListener = new View.OnTouchListener()
