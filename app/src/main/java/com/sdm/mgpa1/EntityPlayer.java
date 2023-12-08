@@ -20,7 +20,6 @@ public class EntityPlayer implements EntityBase, Collidable {
     private boolean isInit = false;
     private int renderLayer = 1; // layer 1 to be rendered
 
-    public static EntityPlayer Instance = null;
     private boolean hasTouched = false;
 
     public Sprite spriteSheet = null;
@@ -54,7 +53,6 @@ public class EntityPlayer implements EntityBase, Collidable {
         temp = Bitmap.createScaledBitmap(temp,temp.getWidth()*2,temp.getHeight()*2,true);
         spriteSheet = new Sprite(temp, 1, 7, 7);
         //bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.frog);
-        Instance = this;
         isInit = true;
         //_gestureDetector = new GestureDetector(_view.getContext(), this);
         //_view.setOnTouchListener(this);
@@ -78,8 +76,8 @@ public class EntityPlayer implements EntityBase, Collidable {
                     break;
             }
         });
-
     }
+
     @Override
     public void Update(float _dt) {
         spriteSheet.Update(_dt);
@@ -153,6 +151,11 @@ public class EntityPlayer implements EntityBase, Collidable {
         {
             Log.d("COLLISION", "OnHit: BARREL");
             //SetIsDone(true);
+        }
+        if (_other.GetType() == "EntityCoin")
+        {
+            SetIsDone(true);
+            Log.d("COLLISION", "OnHit: COINS");
         }
     }
 
