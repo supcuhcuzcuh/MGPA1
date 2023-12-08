@@ -51,7 +51,7 @@ public class EntityCoin implements EntityBase, Collidable {
     @Override
     public void Render(Canvas _canvas)
     {
-        _canvas.drawBitmap(bmp, xPos, yPos + Camera.Instance.GetY(), null);
+        _canvas.drawBitmap(bmp, xPos * GamePage.relativeX, yPos + Camera.Instance.GetY() * GamePage.relativeY, null);
     }
 
     @Override

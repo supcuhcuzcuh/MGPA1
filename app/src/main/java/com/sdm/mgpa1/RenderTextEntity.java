@@ -65,19 +65,19 @@ public class RenderTextEntity implements EntityBase {
     }
 
     @Override
-    public void Render(Canvas _canvas) {
-
+    public void Render(Canvas _canvas)
+    {
         // Set font color and size
         paint.setColor(Color.WHITE);
         paint.setTextSize(80);
 
         // Draw FPS
         paint.setTypeface(myfont);
-        _canvas.drawText("FPS: " + fps, 1880, 70, paint);
+        _canvas.drawText("FPS: " + fps, 900 * GamePage.relativeX, 70 * GamePage.relativeY, paint);
 
         // Draw any other text
-        _canvas.drawText("Score: " + score, 1880, 170, paint);
-        _canvas.drawText("Lives: " + lives, 1880, 270, paint);
+        _canvas.drawText("Score: " + score, 900 * GamePage.relativeX, 170 * GamePage.relativeY, paint);
+        _canvas.drawText("Lives: " + lives, 900 * GamePage.relativeX, 270 * GamePage.relativeY, paint);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class RenderTextEntity implements EntityBase {
 
     @Override
     public int GetRenderLayer(){
-        return LayerConstants.TEXT_LAYER;
+        return LayerConstants.UI_LAYER;
     }
 
     @Override

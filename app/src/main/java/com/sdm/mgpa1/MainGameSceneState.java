@@ -1,16 +1,7 @@
 package com.sdm.mgpa1;
 
-import android.app.Activity;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.os.Bundle;
-import android.view.Surface;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.Button;
-
-import org.w3c.dom.Entity;
 
 import java.util.Random;
 
@@ -21,7 +12,7 @@ public class MainGameSceneState implements StateBase  {
     public static MainGameSceneState Instance = null;
     private float _spawnTimer = 0.0f;
     private float _spawnTimerInterval = 5f;
-    private SurfaceView _getView;
+    public SurfaceView getView;
 
     @Override
     public String GetName() {
@@ -31,27 +22,28 @@ public class MainGameSceneState implements StateBase  {
     @Override
     public void OnEnter(SurfaceView _view)
     {
-        _getView = _view;
+        Instance = this;
+        getView = _view;
         // 3. Create Background 
         RenderBackground.Create();
 
         EntityPlayer player = EntityPlayer.Create();
         player.Init(_view);
-        player.SetPosX(_view.getWidth()/2);
-        player.SetPosY(_view.getHeight()/2);
+        player.SetPosX(500);
+        player.SetPosY(500);
 
-        int diff = _getView.getWidth()/2;
+        int diff = getView.getWidth()/2;
         Random r = new Random();
-        int heightDiff = _getView.getHeight()/2;
+        int heightDiff = getView.getHeight()/2;
         for (int i = 0; i <= 2; ++i)
         {
             int xStart = diff * (i+1);
             int xPos = r.nextInt(xStart);
             int yPos = r.nextInt(heightDiff/2) + heightDiff/2;
             EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
-            barrel.Init(_getView);
+            barrel.Init(getView);
             barrel.xPos = xPos;
-            barrel.yPos = _getView.getHeight() - Camera.Instance.GetY();
+            barrel.yPos = getView.getHeight() - Camera.Instance.GetY();
         }
 
 //        SmurfEntity _smurf = SmurfEntity.Create();
@@ -86,18 +78,18 @@ public class MainGameSceneState implements StateBase  {
         if (_spawnTimer >= _spawnTimerInterval)
         {
             _spawnTimer = 0;
-            int diff = _getView.getWidth()/3;
+            int diff = getView.getWidth()/3;
             Random r = new Random();
-            int heightDiff = _getView.getHeight()/3;
+            int heightDiff = getView.getHeight()/3;
             for (int i = 0; i <= 2; ++i)
             {
                 int xStart = diff * (i+1);
                 int xPos = r.nextInt(xStart);
                 int yPos = r.nextInt(heightDiff/3) + heightDiff/3;
                 EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
-                barrel.Init(_getView);
+                barrel.Init(getView);
                 barrel.xPos = xPos;
-                barrel.yPos = _getView.getHeight() - Camera.Instance.GetY();
+                barrel.yPos = getView.getHeight() - Camera.Instance.GetY();
             }
         }
         Camera.Instance.MoveWorldUp(80 * _dt);

@@ -62,7 +62,7 @@ public class EntityBarrel implements EntityBase, Collidable{
     {
         float centerX = xPos - textureBarrel.getWidth() / 2f;
         float centerY = yPos - textureBarrel.getHeight() / 2f;
-        _canvas.drawBitmap(textureBarrel, centerX, centerY + Camera.Instance.GetY(), null);
+        _canvas.drawBitmap(textureBarrel, centerX * GamePage.relativeX, centerY + Camera.Instance.GetY() * GamePage.relativeY, null);
     }
 
 

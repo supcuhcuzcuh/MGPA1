@@ -124,6 +124,8 @@ public class EntityPlayer implements EntityBase, Collidable {
         if (yPos + Camera.Instance.GetY() <= 0)
         {
             Log.d("PLAYER", "HAS DIED");
+            GameOverTextEntity gameOver  = GameOverTextEntity.Create();
+            gameOver.Init(MainGameSceneState.Instance.getView);
             SetIsDone(true);
         }
     }
@@ -132,7 +134,7 @@ public class EntityPlayer implements EntityBase, Collidable {
     public void Render(Canvas _canvas) {
         // basic rendering with image centered
         //_canvas.drawBitmap(bmp, xPos - bmp.getWidth() * 0.5f, yPos - bmp.getHeight() * 0.5f, null);
-        spriteSheet.Render(_canvas, (int)xPos, (int) ((int)yPos + Camera.Instance.GetY()));
+        spriteSheet.Render(_canvas, (int)xPos * GamePage.relativeX, (int) ((int)yPos + Camera.Instance.GetY()) * GamePage.relativeY);
     }
     @Override
     public ENTITY_TYPE GetEntityType() {
