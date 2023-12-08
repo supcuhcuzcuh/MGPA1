@@ -34,10 +34,10 @@ public class GamePage extends FragmentActivity {
         relativeX = metrics.widthPixels / 1000;
         relativeY = metrics.heightPixels / 1000;
 
-        SwipeMovement.instance = new SwipeMovement(
+        SwipeMovement.Instance = new SwipeMovement(
                 (VibratorManager) a.getContext().getSystemService(VIBRATOR_MANAGER_SERVICE));
 
-        _swipe = new GestureDetector(this, SwipeMovement.instance);
+        _swipe = new GestureDetector(this, SwipeMovement.Instance);
         a.setOnTouchListener(touchListener);
 
         Camera.Instance = new Camera();

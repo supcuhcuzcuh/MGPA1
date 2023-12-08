@@ -7,51 +7,52 @@ import android.view.SurfaceView;
 
 import androidx.constraintlayout.helper.widget.Layer;
 
-public class EntityCoin implements EntityBase, Collidable
+public class EntityGarbage implements EntityBase, Collidable
 {
+    public float xPos, yPos;
     private Bitmap bmp = null;
     private boolean isDone = false;
-    private float xPos, yPos;
     private  boolean isInit = false;
     @Override
     public String GetType() {
-        return "EntityCoin";
+        return "EntityGarbage";
     }
-
-    public static EntityCoin Create()
+    public static EntityGarbage Create()
     {
-        EntityCoin result = new EntityCoin();
-        EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_SMURF);
+        EntityGarbage result = new EntityGarbage();
+        EntityManager.Instance.AddEntity(result, ENTITY_TYPE.ENT_GARBAGE);
         return result;
     }
 
-    public static EntityCoin Create(int _layer)
+    public static EntityGarbage Create(int _layer)
     {
-        EntityCoin result = Create();
+        EntityGarbage result = Create();
         result.SetRenderLayer(_layer);
         return result;
     }
-
     @Override
     public void Init(SurfaceView _view)
     {
-        bmp = ResourceManager.Instance.GetBitmap(R.drawable.coins);
-        bmp = Bitmap.createScaledBitmap(bmp,bmp.getWidth() / 5,bmp.getHeight() / 5,true);
-        xPos = 600;
-        yPos = 200;
+        bmp = ResourceManager.Instance.GetBitmap(R.drawable.garbage);
+        bmp = Bitmap.createScaledBitmap(bmp,bmp.getWidth() / 8,bmp.getHeight() /8,true);
     }
 
     @Override
-    public void Update(float _dt) {
-
+    public void Update(float _dt)
+    {
+        if (yPos + Camera.Instance.GetY() <= 0)
+        {
+            Log.d("GARBAGE", "DELETED INNIT");
+            SetIsDone(true);
+        }
     }
-
     @Override
     public void Render(Canvas _canvas)
     {
-        _canvas.drawBitmap(bmp, xPos * GamePage.relativeX, yPos + Camera.Instance.GetY() * GamePage.relativeY, null);
+        float centerX = xPos - bmp.getWidth() / 2f;
+        float centerY = yPos - bmp.getHeight() / 2f;
+        _canvas.drawBitmap(bmp, centerX * GamePage.relativeX, centerY + Camera.Instance.GetY() * GamePage.relativeY, null);
     }
-
     @Override
     public float GetPosX() {
         return xPos;
@@ -64,45 +65,36 @@ public class EntityCoin implements EntityBase, Collidable
 
     @Override
     public float GetRadius() {
-        return bmp.getWidth() ;
+        return bmp.getWidth() / 2;
     }
-
     @Override
     public void OnHit(Collidable _other)
     {
         if (_other.GetType() == "PlayerEntity")
         {
-            Log.d("COIN", "COLLIDED WITH PLAYER ENTITY");
             SetIsDone(true);
         }
     }
 
     @Override
-    public boolean IsDone() {
+    public boolean IsDone()
+    {
         return isDone;
     }
-
+    public int GetRenderLayer() {
+        return LayerConstants.GARBAGE_LAYER;
+    }
     @Override
     public void SetIsDone(boolean _isDone) {
         isDone = _isDone;
     }
-
-
     @Override
     public boolean IsInit() {
         return false;
     }
 
     @Override
-    public int GetRenderLayer() { return LayerConstants.COIN_LAYER;}
-
+    public void SetRenderLayer(int _newLayer) {}
     @Override
-    public void SetRenderLayer(int _newLayer) {
-
-    }
-
-    @Override
-    public ENTITY_TYPE GetEntityType() {
-        return null;
-    }
+    public ENTITY_TYPE GetEntityType() {return null;}
 }

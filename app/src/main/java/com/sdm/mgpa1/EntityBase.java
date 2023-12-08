@@ -12,6 +12,7 @@ public interface EntityBase
     enum ENTITY_TYPE{
         //ENT_NEXT,
         //ENT_PAUSE,
+        ENT_GARBAGE,
         ENT_BARREL,
         ENT_PLAYER,
         ENT_TEXT,

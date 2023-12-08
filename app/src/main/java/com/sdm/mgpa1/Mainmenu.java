@@ -54,8 +54,8 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
        if (v == btn_start)
        {
            intent.setClass(this, GamePage.class);
-           StateManager.Instance.ChangeState("MainGame2");
-           //StateManager.Instance.ChangeState("MainGame");
+           //StateManager.Instance.ChangeState("MainGame2");
+           StateManager.Instance.ChangeState("MainGame");
        }
        else if (v == btn_back)
        {

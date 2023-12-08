@@ -29,6 +29,7 @@ public class RenderTextEntity implements EntityBase {
     EntityPlayer player = EntityPlayer.Instance;
     int score = player.getScore();
     int lives = player.getLives();
+    int garbageCollected = player.getGarbageCollected();
     @Override
     public boolean IsDone() {
         return isDone;
@@ -62,14 +63,14 @@ public class RenderTextEntity implements EntityBase {
 
         score = player.getScore();
         lives = player.getLives();
+        garbageCollected = player.getGarbageCollected();
     }
-
     @Override
     public void Render(Canvas _canvas)
     {
         // Set font color and size
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(80);
+        paint.setColor(Color.RED);
+        paint.setTextSize(70);
 
         // Draw FPS
         paint.setTypeface(myfont);
@@ -78,8 +79,9 @@ public class RenderTextEntity implements EntityBase {
         // Draw any other text
         _canvas.drawText("Score: " + score, 900 * GamePage.relativeX, 170 * GamePage.relativeY, paint);
         _canvas.drawText("Lives: " + lives, 900 * GamePage.relativeX, 270 * GamePage.relativeY, paint);
+        _canvas.drawText("Garbage", 900 * GamePage.relativeX, 370 * GamePage.relativeY, paint);
+        _canvas.drawText("Collected: " + garbageCollected, 900 * GamePage.relativeX, 470 * GamePage.relativeY, paint);
     }
-
     @Override
     public boolean IsInit() {
         return isInit;

@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class SwipeMovement extends GestureDetector.SimpleOnGestureListener {
-    public static SwipeMovement instance;
+    public static SwipeMovement Instance;
     public GenericSubscription<Direction> onSwipe;
     public GenericSubscription<V2> onTapDown;
     public GenericSubscription<V2> onTapUp;

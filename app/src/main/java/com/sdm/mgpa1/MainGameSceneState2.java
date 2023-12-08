@@ -42,20 +42,16 @@ public class MainGameSceneState2 implements StateBase  {
 
         int diff = _getView.getWidth()/2;
         Random r = new Random();
-        int heightDiff = _getView.getHeight()/2;
         for (int i = 0; i <= 2; ++i)
         {
             int xStart = diff * (i+1);
             int xPos = r.nextInt(xStart);
-            int yPos = r.nextInt(heightDiff/2) + heightDiff/2;
             EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
             barrel.Init(_getView);
             barrel.xPos = xPos;
             barrel.yPos = _getView.getHeight() - Camera.Instance.GetY();
         }
 
-//        SmurfEntity _smurf = SmurfEntity.Create();
-//        _smurf.Init(_view);
         RenderTextEntity _text = RenderTextEntity.Create();
 
         _text.Init(_view);
