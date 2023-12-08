@@ -17,7 +17,7 @@ public interface EntityBase
         ENT_PLAYER,
         ENT_TEXT,
         ENT_SMURF,
-        ENT_DEFAULT, GoodCar,
+        ENT_DEFAULT, GoodCar, bg2, Jump_Powerup,
     }
 
     boolean IsDone();

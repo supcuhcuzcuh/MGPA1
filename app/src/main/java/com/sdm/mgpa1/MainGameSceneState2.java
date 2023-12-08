@@ -33,25 +33,29 @@ public class MainGameSceneState2 implements StateBase  {
     {
         _getView = _view;
         // 3. Create Background
-        RenderBackground.Create();
+        RenderBackground2.Create();
 
-        EntityPlayer player = EntityPlayer.Create();
+        EntityPlayer player = EntityPlayer.Create(LayerConstants.SMURF_LAYER);
         player.Init(_view);
         player.SetPosX(500);
         player.SetPosY(900);
 
         int diff = _getView.getWidth()/2;
         Random r = new Random();
-        for (int i = 0; i <= 2; ++i)
+        int heightDiff = _getView.getHeight()/2;
+        for (int i = 0; i <= 1; ++i)
         {
             int xStart = diff * (i+1);
             int xPos = r.nextInt(xStart);
+            int yPos = r.nextInt(heightDiff/2) + heightDiff/2;
             EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
             barrel.Init(_getView);
             barrel.xPos = xPos;
             barrel.yPos = _getView.getHeight() - Camera.Instance.GetY();
         }
 
+//        SmurfEntity _smurf = SmurfEntity.Create();
+//        _smurf.Init(_view);
         RenderTextEntity _text = RenderTextEntity.Create();
 
         _text.Init(_view);
@@ -76,6 +80,21 @@ public class MainGameSceneState2 implements StateBase  {
         EntityManager.Instance.Render(_canvas);
     }
 
+    private void spawnPowerUp() {
+        int diff = _getView.getWidth() / 3;
+        Random r = new Random();
+        int heightDiff = _getView.getHeight() / 3;
+
+        JumpDistancePowerup powerUp = JumpDistancePowerup.Create(LayerConstants.BARREL_LAYER);
+        powerUp.Init(_getView);
+
+        int xPos = r.nextInt(diff);
+        int yPos = r.nextInt(heightDiff / 3) + heightDiff / 3;
+
+        powerUp.xPos = xPos;
+        powerUp.yPos = -Camera.Instance.GetY();
+    }
+
     @Override
     public void Update(float _dt) {
         EntityManager.Instance.Update(_dt);
@@ -83,21 +102,42 @@ public class MainGameSceneState2 implements StateBase  {
         if (_spawnTimer >= _spawnTimerInterval)
         {
             _spawnTimer = 0;
+            // 1 in 3 chance to spawn a power-up
+            if (new Random().nextInt(3) == 0) {
+                spawnPowerUp();
+            }
+
             int diff = _getView.getWidth()/3;
             Random r = new Random();
-            int heightDiff = _getView.getHeight()/3;
-            for (int i = 0; i <= 2; ++i)
+            int heightDiff = _getView.getHeight()/3 ;
+
+
+
+
+            for (int i = 0; i <= 1; ++i)
             {
                 int xStart = diff * (i+1);
                 int xPos = r.nextInt(xStart);
                 int yPos = r.nextInt(heightDiff/3) + heightDiff/3;
-                EntityBarrel barrel = EntityBarrel.Create(LayerConstants.BARREL_LAYER);
+
+
+
+
+                EntityGoodCar barrel = EntityGoodCar.Create(LayerConstants.BARREL_LAYER);
+
+                int speedtemp = r.nextInt(100);
+                speedtemp = speedtemp + 40;
+
+
+
+
+                barrel.SetSpeed(speedtemp);
                 barrel.Init(_getView);
                 barrel.xPos = xPos;
-                barrel.yPos = _getView.getHeight() - Camera.Instance.GetY();
+                barrel.yPos = -Camera.Instance.GetY();
             }
         }
-        Camera.Instance.MoveWorldUp(80 * _dt);
+        Camera.Instance.MoveWorldDown(80 * _dt);
         //if (TouchManager.Instance.IsDown()) {
         //6. Example of touch on screen in the main game to trigger back to Main menu
         //StateManager.Instance.ChangeState("Mainmenu");

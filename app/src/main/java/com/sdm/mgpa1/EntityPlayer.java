@@ -43,6 +43,13 @@ public class EntityPlayer implements EntityBase, Collidable {
     {
         return garbageCollected;
     }
+
+    private float lerppos = 200;
+
+    // Add variables to keep track of the lerp modification
+    private boolean isPowerupLerpActive = false;
+    private long powerupLerpStartTime = 0;
+    private long powerupLerpDuration = 3000; // Duration in milliseconds (adjust as needed)
     public int getScore() {
         return score;
     }
@@ -93,16 +100,16 @@ public class EntityPlayer implements EntityBase, Collidable {
             switch (direction)
             {
                 case left:
-                    LerpPosition(xPos - 200, yPos, 500);
+                    LerpPosition(xPos - lerppos, yPos, 500);
                     break;
                 case right:
-                    LerpPosition(xPos + 200, yPos, 500);
+                    LerpPosition(xPos + lerppos, yPos, 500);
                     break;
                 case up:
-                    LerpPosition(xPos, yPos - 200, 500);
+                    LerpPosition(xPos, yPos - lerppos, 500);
                     break;
                 case down:
-                    LerpPosition(xPos, yPos + 200, 500);
+                    LerpPosition(xPos, yPos + lerppos, 500);
                     break;
             }
         });
@@ -140,6 +147,16 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public void Update(float _dt) {
+        if (isPowerupLerpActive) {
+            // Check if the powerup lerp duration has passed
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - powerupLerpStartTime >= powerupLerpDuration) {
+                // Powerup effect has ended, reset lerppos to 200
+                lerppos = 200;
+                isPowerupLerpActive = false;
+            }
+        }
+
         if (isMoving) {
             spriteSheet.Update(_dt);
         } else {
@@ -155,6 +172,16 @@ public class EntityPlayer implements EntityBase, Collidable {
                 gameOverText.Init(GamePage.Instance.currentSceneView);
             }
             SetIsDone(true);
+        }
+
+
+        // Check if player's position exceeds screen boundaries
+        float screenWidth = GamePage.Instance.currentSceneView.getWidth();
+        // Adjust player position if it exceeds the left or right border
+        if (xPos < 0) {
+            xPos = 0;
+        } else if (xPos > screenWidth) {
+            xPos = screenWidth;
         }
     }
 
@@ -190,7 +217,7 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public float GetRadius() {
-        return spriteSheet.GetWidth() / 4;
+        return 0;
     }
 
     public void startVibrate()
@@ -220,10 +247,19 @@ public class EntityPlayer implements EntityBase, Collidable {
             Log.d("COLLISION", "OnHit: BARREL");
             lives -= 1;
         }
-        if (_other.GetType() == "EntityCoin")
+        if (_other.GetType() == "EntityGoodCar")
         {
             SwipeMovement.Instance.vibrate(2000, 100);
             score += 20;
+
+            // Update player position to match car position
+            if (_other instanceof EntityGoodCar) {
+                EntityGoodCar carEntity = (EntityGoodCar) _other;
+
+                // Update player position to match car position
+                SetPosX(carEntity.GetPosX());
+                SetPosY(carEntity.GetPosY() - 75);
+            }
         }
         if (_other.GetType() == "EntityGarbage")
         {
@@ -240,6 +276,22 @@ public class EntityPlayer implements EntityBase, Collidable {
                 SetPosY(log.GetPosY() - 50);
             }
         }
+
+        if (_other.GetType() == "Powerup") {
+            Log.d("COLLISION", "OnHit: POWERUP ENTITY");
+
+            // Set lerppos to 600 for a while
+            lerppos = 600;
+
+            // Activate powerup lerp
+            isPowerupLerpActive = true;
+            powerupLerpStartTime = System.currentTimeMillis();
+
+            // Perform any other actions related to powerup collision
+
+        }
+
+
     }
 
     @Override
