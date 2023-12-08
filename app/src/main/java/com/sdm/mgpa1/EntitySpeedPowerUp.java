@@ -18,7 +18,7 @@ public class EntitySpeedPowerUp implements EntityBase, Collidable
     @Override
     public void Init(SurfaceView _view) {
         bmp = ResourceManager.Instance.GetBitmap(R.drawable.lowercdpowerup);
-        bmp = Bitmap.createScaledBitmap(bmp,bmp.getWidth() / 3 ,bmp.getHeight() / 3,true);
+        bmp = Bitmap.createScaledBitmap(bmp,bmp.getWidth() / 2 ,bmp.getHeight() / 2,true);
     }
 
     @Override
@@ -32,7 +32,10 @@ public class EntitySpeedPowerUp implements EntityBase, Collidable
 
     @Override
     public void Render(Canvas _canvas) {
-        _canvas.drawBitmap(bmp, xPos * GamePage.relativeX, yPos + Camera.Instance.GetY() * GamePage.relativeY, null);
+        float centerX = xPos - bmp.getWidth() / 2f;
+        float centerY = yPos - bmp.getHeight() / 2f;
+        _canvas.drawBitmap(bmp, centerX * GamePage.relativeX, centerY + Camera.Instance.GetY() * GamePage.relativeY, null);
+        //_canvas.drawBitmap(bmp, xPos * GamePage.relativeX, yPos + Camera.Instance.GetY() * GamePage.relativeY, null);
     }
     public static EntitySpeedPowerUp Create()
     {
