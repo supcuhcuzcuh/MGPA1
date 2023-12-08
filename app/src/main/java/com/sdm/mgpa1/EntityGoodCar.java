@@ -16,6 +16,9 @@ public class EntityGoodCar implements EntityBase, Collidable{
 
     private Bitmap textureBarrel;
 
+
+    private float speed = 5.0f; // Adjust the speed as needed
+
     @Override
     public String GetType() {
         return "EntityBarrel";
@@ -50,12 +53,11 @@ public class EntityGoodCar implements EntityBase, Collidable{
     public void Update(float _dt)
     {
 
-        if(Collision.CircleToRectangle(EntityPlayer.Instance.GetPosX(), EntityPlayer.Instance.GetPosY(),EntityPlayer.Instance.GetRadius(), xPos,yPos,_bitmap.getWidth(),_bitmap.getHeight()))
-        {
+        // Move the car to the left
+        xPos -= speed;
 
 
 
-        }
     }
 
     @Override
