@@ -264,7 +264,7 @@ public class EntityPlayer implements EntityBase, Collidable {
         {
             SwipeMovement.Instance.vibrate(2000, 100);
             Log.d("COLLISION", "OnHit: BARREL");
-            //lives -= 1;
+            lives -= 1;
         }
         if (_other.GetType() == "EntityGoodCar")
         {

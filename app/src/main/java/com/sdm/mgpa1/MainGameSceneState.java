@@ -39,7 +39,7 @@ public class MainGameSceneState implements StateBase  {
 
         Random rBarrel = new Random();
         Random rGarbage = new Random();
-        Random rLog = new Random();
+        //Random rLog = new Random();
 
         for (int i = 0; i <= 2; ++i)
         {

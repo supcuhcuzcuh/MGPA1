@@ -45,12 +45,12 @@ public class GameOverTextEntity implements EntityBase
     public void Render(Canvas _canvas)
     {
         // Set font color and size
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(80);
+        paint.setColor(Color.RED);
+        paint.setTextSize(120);
 
         // Draw FPS
         paint.setTypeface(myfont);
-        _canvas.drawText("GAME OVER RETARD!", 350 * GamePage.relativeX, 500 * GamePage.relativeY, paint);
+        _canvas.drawText("GAME OVER!", 350 * GamePage.relativeX, 500 * GamePage.relativeY, paint);
     }
 
     @Override

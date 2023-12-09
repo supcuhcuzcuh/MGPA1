@@ -36,7 +36,7 @@ public class EntityLog implements EntityBase, Collidable
     public void Init(SurfaceView _view)
     {
         bmp = ResourceManager.Instance.GetBitmap(R.drawable.log);
-        bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth() ,bmp.getHeight() ,true);
+        bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth() / 5, bmp.getHeight() / 5,true);
     }
 
     @Override
@@ -52,9 +52,9 @@ public class EntityLog implements EntityBase, Collidable
     @Override
     public void Render(Canvas _canvas)
     {
-        float centerX = xPos;
-        float centerY = yPos;
-       //_canvas.drawBitmap(bmp, centerX * GamePage.relativeX, centerY + Camera.Instance.GetY() * GamePage.relativeY, null);
+        float centerX = xPos - bmp.getWidth() / 2f;
+        float centerY = yPos - bmp.getHeight() / 2f;
+        _canvas.drawBitmap(bmp, centerX * GamePage.relativeX, centerY + Camera.Instance.GetY() * GamePage.relativeY, null);
     }
     @Override
     public float GetPosX() {
@@ -83,8 +83,13 @@ public class EntityLog implements EntityBase, Collidable
     }
 
     @Override
-    public void SetIsDone(boolean _isDone) {
-        isDone = _isDone;
+    public void SetIsDone(boolean _isDone)
+    {
+        if (isDone)
+        {
+            EntityManager.Instance.RemoveEntity(this);
+        }
+//        isDone = _isDone;
     }
 
     @Override
