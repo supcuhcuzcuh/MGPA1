@@ -20,21 +20,19 @@ public class Collision
         return true;
     }
 
-    // New method for sphere-to-rectangle collision
+
     public static boolean CircleToRectangle(float circleX, float circleY, float radius,
                                             float rectX, float rectY, int rectWidth, int rectHeight)
     {
         // Calculate Distances between Circle and Rectangle
-        float xDist = rectX - circleX;
-        float yDist = rectY - circleY;
-        // abs
-        xDist = xDist > 0 ? xDist : -xDist;
-        yDist = yDist > 0 ? yDist : -yDist;
+        float xDist = Math.abs(rectX - circleX);
+        float yDist = Math.abs(rectY - circleY);
 
         // Check if collided on x and y separately to account for rectangle edges
-        boolean xCollided = (radius + rectWidth) > xDist;
-        boolean yCollided = (radius + rectHeight) > yDist;
+        boolean xCollided = xDist < (rectWidth / 2 + radius);
+        boolean yCollided = yDist < (rectHeight / 2 + radius);
 
-        return xCollided || yCollided;
+        return xCollided && yCollided;
     }
+
 }

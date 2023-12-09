@@ -24,17 +24,25 @@ public class AudioManager {
         res = _view.getResources();
     }
 
-    public void PlayAudio(int _id, int left_vol)
-    {
-        if (audioMap.containsKey(_id))
-        {
+    public void PlayAudio(int _id, float leftVol) {
+        if (audioMap.containsKey(_id)) {
             audioMap.get(_id).reset();
-            audioMap.get(_id).start();
+            audioMap.remove(_id);
         }
 
         // Load the audio
         MediaPlayer newAudio = MediaPlayer.create(view.getContext(), _id);
         audioMap.put(_id, newAudio);
+
+        // Set the left volume
+        if (leftVol >= 0.0f && leftVol <= 1.0f) {
+            newAudio.setVolume(leftVol, 5000);  // leftVol for left channel, 1.0f for right channel
+        } else {
+            // Handle invalid left volume (should be between 0.0 and 1.0)
+            // You can set a default value or log an error.
+        }
+
+        // Start playback
         newAudio.start();
     }
 

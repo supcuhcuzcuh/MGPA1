@@ -75,7 +75,6 @@ public class RenderTextEntity implements EntityBase {
         // Draw FPS
         paint.setTypeface(myfont);
 
-
         // Draw any other text
         _canvas.drawText("FPS: " + fps, 900 * GamePage.relativeX, 70 * GamePage.relativeY, paint);
         _canvas.drawText("Score: " + score, 900 * GamePage.relativeX, 170 * GamePage.relativeY, paint);

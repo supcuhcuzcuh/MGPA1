@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,8 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
     private Button btn_start;
     private Button btn_back;
     private Button btn_quit;
+
+    public static String scene = "MainGame";
 
     @Override
     protected void onCreate (Bundle saveInstanceState)
@@ -41,9 +44,10 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
 
         Instance = this; // set the singleton others null error
 
-        StateManager.Instance.Init(new SurfaceView(this));
-        GameSystem.Instance.Init(new SurfaceView(this));
+        //StateManager.Instance.Init(new SurfaceView(this));
+        //GameSystem.Instance.Init(new SurfaceView(this));
         //StateManager.Instance.Start("Mainmenu");
+        //AudioManager.Instance.PlayAudio(R.raw.gamemusic, 40);
     }
 
     @Override
@@ -54,13 +58,13 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
        if (v == btn_start)
        {
            intent.setClass(this, GamePage.class);
-           StateManager.Instance.ChangeState("MainGame2");
+           StateManager.Instance.ChangeState(scene);
            //StateManager.Instance.ChangeState("MainGame2");
        }
        else if (v == btn_back)
        {
-           intent.setClass(this, NextPage.class);
-           StateManager.Instance.ChangeState("MainPage");
+           intent.setClass(this, GamePage.class);
+           StateManager.Instance.ChangeState("NextPage");
        }
        else if (v == btn_quit)
        {
@@ -68,7 +72,6 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
        }
        startActivity(intent);
     }
-
 
     @Override
     protected void onPause(){super.onPause();}

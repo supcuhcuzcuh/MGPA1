@@ -18,6 +18,7 @@ public class GameView extends SurfaceView {
     {
         super(_context);
         holder = getHolder();
+        GameView view = this;
 
         if (holder != null)
         {

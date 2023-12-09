@@ -27,7 +27,7 @@ public class RenderBackground implements EntityBase {
     public void Init(SurfaceView _view)
     {
         // load image from the reso0urce
-        bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.sea);
+        bmp = BitmapFactory.decodeResource(_view.getResources(), R.drawable.backgroundjosh);
         // screen size
         DisplayMetrics metrics = _view.getResources().getDisplayMetrics();
         ScreenWidth = metrics.widthPixels;

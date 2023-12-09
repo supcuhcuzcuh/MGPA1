@@ -80,13 +80,14 @@ public class EntityPlayer implements EntityBase, Collidable {
     {
         EntityPlayer result = Create();
         result.SetRenderLayer(_layer);
+        Instance = result;
 
         return result;
     }
 
     @Override
     public void Init(SurfaceView _view) {
-
+        isDone = false;
         // Load sprite sheets for idle and moving states
         Bitmap tempIdle = ResourceManager.Instance.GetBitmap(R.drawable.playeridle);
         tempIdle = Bitmap.createScaledBitmap(tempIdle, tempIdle.getWidth() * 2, tempIdle.getHeight() * 2, false);
@@ -111,15 +112,19 @@ public class EntityPlayer implements EntityBase, Collidable {
             {
                 case left:
                     LerpPosition(xPos - lerppos, yPos,  _movementSpeed);
+                    AudioManager.Instance.PlayAudio(R.raw.jump, 200);
                     break;
                 case right:
                     LerpPosition(xPos + lerppos, yPos, _movementSpeed);
+                    AudioManager.Instance.PlayAudio(R.raw.jump, 200);
                     break;
                 case up:
                     LerpPosition(xPos, yPos - lerppos, + _movementSpeed);
+                    AudioManager.Instance.PlayAudio(R.raw.jump, 200);
                     break;
                 case down:
                     LerpPosition(xPos, yPos + lerppos,  + _movementSpeed);
+                    AudioManager.Instance.PlayAudio(R.raw.jump, 200);
                     break;
             }
         });
@@ -157,10 +162,6 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public void Update(float _dt) {
-
-
-
-
         if (isPowerupLerpActive) {
             // Check if the powerup lerp duration has passed
             long currentTime = System.currentTimeMillis();
@@ -187,33 +188,51 @@ public class EntityPlayer implements EntityBase, Collidable {
             spriteSheetIdle.Update(_dt);
         }
 
+       // Die Conditions for Player
         if (yPos + Camera.Instance.GetY() <= 0 || lives <= 0 ||  yPos + Camera.Instance.GetY() >=  GamePage.Instance.currentSceneView.getHeight())
         {
             Log.d("PLAYER", "HAS DIED");
+            AudioManager.Instance.PlayAudio(R.raw.gameover, 1);
             GameOverTextEntity gameOverText  = GameOverTextEntity.Create();
             if (gameOverText != null)
             {
                 gameOverText.Init(GamePage.Instance.currentSceneView);
             }
             SetIsDone(true);
+//            Intent intent = new Intent(GamePage.Instance,Mainmenu.class);
+//            GamePage.Instance.startActivity(intent);
+//            //StateManager.Instance.ChangeState("MainGame2");
+//            //Init(GamePage.currentSceneView);
+//            xPos = 500;
+//            yPos = 500;
+//            Camera.Instance.SetY(0);
         }
 
+        if (score >= 100)
+        {
+            Mainmenu.scene = "MainGame2";
+            Intent intent = new Intent(GamePage.Instance,Mainmenu.class);
+            GamePage.Instance.startActivity(intent);
+            //StateManager.Instance.ChangeState("MainGame2");
+            //Init(GamePage.currentSceneView);
+            xPos = 500;
+            yPos = 500;
+            Camera.Instance.SetY(0);
+        }
+
+        if (score >= 200)
+        {
+
+        }
 
         // Check if player's position exceeds screen boundaries
         float screenWidth = GamePage.Instance.currentSceneView.getWidth();
         // Adjust player position if it exceeds the left or right border
-        if (xPos < 0) {
+        if (xPos < 10) {
             xPos = 0;
-        } else if (xPos > screenWidth) {
+        } else if (xPos > screenWidth - 10) {
             xPos = screenWidth;
         }
-    }
-
-    private void ChangeToMainGame2() {
-        Intent intent = new Intent();
-        intent.setClass(GamePage.Instance.currentSceneView.getContext(), MainGameSceneState2.class); // Change MainGame2 to the actual class of your new scene
-        StateManager.Instance.ChangeState("MainGame");
-
     }
     @Override
     public void Render(Canvas _canvas) {
@@ -269,22 +288,23 @@ public class EntityPlayer implements EntityBase, Collidable {
         {
             Log.d("COLLISION", "OnHit: SMURF ENTITY");
             SetIsDone(true);
-            AudioManager.Instance.PlayAudio(R.raw.trollsound, 200);
+            AudioManager.Instance.PlayAudio(R.raw.trollsound, 1);
         }
         if (_other.GetType() == "EntityCoin")
         {
-            score += 5;
+            score += 20;
+            AudioManager.Instance.PlayAudio(R.raw.addscoresound, 1);
         }
         if (_other.GetType() == "EntityBarrel")
         {
             SwipeMovement.Instance.vibrate(2000, 100);
+            AudioManager.Instance.PlayAudio(R.raw.hurtsound, 1);
             Log.d("COLLISION", "OnHit: BARREL");
             lives -= 1;
         }
         if (_other.GetType() == "EntityGoodCar")
         {
             SwipeMovement.Instance.vibrate(2000, 100);
-
 
             // Update player position to match car position
             if (_other instanceof EntityGoodCar) {
@@ -307,8 +327,6 @@ public class EntityPlayer implements EntityBase, Collidable {
         {
             SwipeMovement.Instance.vibrate(2000, 100);
 
-
-
             // Update player position to match car position
             if (_other instanceof EntityBadCar) {
 
@@ -329,6 +347,7 @@ public class EntityPlayer implements EntityBase, Collidable {
         if (_other.GetType() == "EntityGarbage")
         {
             garbageCollected += 1;
+            AudioManager.Instance.PlayAudio(R.raw.addgarbagescore, 1);
         }
         if (_other.GetType() == "EntityLog")
         {
@@ -344,10 +363,9 @@ public class EntityPlayer implements EntityBase, Collidable {
         if (_other.GetType() == "MovementPowerUp")
         {
             _movementSpeed = 100;
-
-            AudioManager.Instance.PlayAudio(R.raw.addscoresound, 600);
             isPowerupFastActive = true;
             powerupFastStartTime = System.currentTimeMillis();
+            AudioManager.Instance.PlayAudio(R.raw.takespeedpowerup, 1);
         }
         if (_other.GetType() == "Powerup") {
             Log.d("COLLISION", "OnHit: POWERUP ENTITY");
