@@ -35,7 +35,7 @@ public class PauseButton implements EntityBase {
         PauseImage = Bitmap.createScaledBitmap(PauseImage,
                 PauseImage.getWidth() / 6, PauseImage.getHeight() / 6 , true);
 
-        SwipeMovement.Instance.onTapDown.subscribe(v2 -> {
+        SwipeMovement.Instance.onTapUp.subscribe(v2 -> {
 
             if(withinMouseTouch(v2)) {
 

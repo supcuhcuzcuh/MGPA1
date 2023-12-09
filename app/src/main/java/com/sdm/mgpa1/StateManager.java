@@ -24,7 +24,7 @@ public class StateManager {
     private String currState = null;
     private String nextState = null;
 
-    private SurfaceView view = null;
+    //private SurfaceView view = null;
 
     // This is the protected constructor for singleton
     private StateManager()
@@ -33,7 +33,7 @@ public class StateManager {
 
     public void Init(SurfaceView _view)
     {
-        view = _view;
+        //view = _view;
     }
 
     void AddState(StateBase _newState)
@@ -58,7 +58,7 @@ public class StateManager {
         if (!Objects.equals(nextState, currState) || currState == null) {
             StateBase next = stateMap.get(nextState);
             if (curr != null) curr.OnExit();
-            if (next != null) next.OnEnter(view);
+            if (next != null) next.OnEnter(GamePage.currentSceneView);
             prevState = currState;
             currState = nextState;
             curr = next;

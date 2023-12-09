@@ -17,7 +17,6 @@ public class MainGameSceneState implements StateBase  {
     public static MainGameSceneState Instance = null;
     private float _spawnTimer = 0.0f;
     private float _spawnTimerInterval = 5f;
-    public SurfaceView getView;
 
     private PauseButton _pauseButton;
     @Override
@@ -29,7 +28,6 @@ public class MainGameSceneState implements StateBase  {
     public void OnEnter(SurfaceView _view)
     {
         Instance = this;
-        getView = _view;
         // 3. Create Background 
         RenderBackground.Create();
 
@@ -46,7 +44,7 @@ public class MainGameSceneState implements StateBase  {
         player.SetPosY(500);
 
         int diff = 1000/3;
-        int heightDiff = getView.getHeight()/2;
+        int heightDiff = GamePage.currentSceneView.getHeight()/2;
 
         Random rBarrel = new Random();
         Random rGarbage = new Random();
@@ -62,9 +60,9 @@ public class MainGameSceneState implements StateBase  {
             speedtemp = speedtemp + 40;
 
             barrel.SetSpeed(speedtemp);
-            barrel.Init(getView);
+            barrel.Init(GamePage.currentSceneView);
             barrel.xPos = xPos;
-            barrel.yPos = getView.getHeight() - Camera.Instance.GetY();
+            barrel.yPos = GamePage.currentSceneView.getHeight() - Camera.Instance.GetY();
         }
 
         for (int i = 0; i <= 1; ++i)
@@ -73,9 +71,9 @@ public class MainGameSceneState implements StateBase  {
             int xPos = rGarbage.nextInt(xStart);
             //int yPos = rGarbage.nextInt(heightDiff/2) + heightDiff/2;
             EntityGarbage garbage = EntityGarbage.Create(LayerConstants.GARBAGE_LAYER);
-            garbage.Init(getView);
+            garbage.Init(GamePage.currentSceneView);
             garbage.xPos = xPos;
-            garbage.yPos = getView.getHeight() - Camera.Instance.GetY();
+            garbage.yPos = GamePage.currentSceneView.getHeight() - Camera.Instance.GetY();
         }
 
 //        for (int i = 0; i < 1; ++i)
@@ -131,7 +129,7 @@ public class MainGameSceneState implements StateBase  {
             Random rGarbage = new Random();
             Random rCoins = new Random();
 
-            int heightDiff = getView.getHeight() / 3;
+            int heightDiff = GamePage.currentSceneView.getHeight() / 3;
 
             for (int i = 0; i <= 1; ++i) {
                 int xStart = diff * (i + 1);
@@ -142,9 +140,9 @@ public class MainGameSceneState implements StateBase  {
                 speedtemp = speedtemp + 40;
 
                 barrel.SetSpeed(speedtemp);
-                barrel.Init(getView);
+                barrel.Init(GamePage.currentSceneView);
                 barrel.xPos = xPos;
-                barrel.yPos = getView.getHeight() - Camera.Instance.GetY();
+                barrel.yPos = GamePage.currentSceneView.getHeight() - Camera.Instance.GetY();
             }
 
             for (int i = 0; i <= 1; ++i) {
@@ -152,7 +150,7 @@ public class MainGameSceneState implements StateBase  {
                 int xPos = rGarbage.nextInt(xStart) + (diff * 1);
                 int yPos = rGarbage.nextInt(heightDiff / 2) + heightDiff / 2;
                 EntityGarbage garbage = EntityGarbage.Create(LayerConstants.GARBAGE_LAYER);
-                garbage.Init(getView);
+                garbage.Init(GamePage.currentSceneView);
                 garbage.xPos = xPos;
                 garbage.yPos = 1000 - Camera.Instance.GetY();
             }
@@ -162,7 +160,7 @@ public class MainGameSceneState implements StateBase  {
                 int xPos = rCoins.nextInt(xStart) + (diff * 1);
                 int yPos = rCoins.nextInt(heightDiff / 2) + heightDiff / 2;
                 EntityCoin coins = EntityCoin.Create(LayerConstants.COIN_LAYER);
-                coins.Init(getView);
+                coins.Init(GamePage.currentSceneView);
                 coins.xPos = xPos;
                 coins.yPos = 1000 - Camera.Instance.GetY();
             }
@@ -188,12 +186,12 @@ public class MainGameSceneState implements StateBase  {
     }
 
     private void spawnPowerUp() {
-        int diff = getView.getWidth() / 3;
+        int diff = GamePage.currentSceneView.getWidth() / 3;
         Random r = new Random();
-        int heightDiff = getView.getHeight() / 3;
+        int heightDiff = GamePage.currentSceneView.getHeight() / 3;
 
         EntitySpeedPowerUp powerUp = EntitySpeedPowerUp.Create(LayerConstants.SPEEDPOWERUP_LAYER);
-        powerUp.Init(getView);
+        powerUp.Init(GamePage.currentSceneView);
 
         int xPos = r.nextInt(diff);
         int yPos = r.nextInt(heightDiff / 3) + heightDiff / 3;

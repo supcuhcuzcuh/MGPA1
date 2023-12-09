@@ -80,13 +80,14 @@ public class EntityPlayer implements EntityBase, Collidable {
     {
         EntityPlayer result = Create();
         result.SetRenderLayer(_layer);
+        Instance = result;
 
         return result;
     }
 
     @Override
     public void Init(SurfaceView _view) {
-
+        isDone = false;
         // Load sprite sheets for idle and moving states
         Bitmap tempIdle = ResourceManager.Instance.GetBitmap(R.drawable.playeridle);
         tempIdle = Bitmap.createScaledBitmap(tempIdle, tempIdle.getWidth() * 2, tempIdle.getHeight() * 2, false);
@@ -197,7 +198,14 @@ public class EntityPlayer implements EntityBase, Collidable {
                 gameOverText.Init(GamePage.Instance.currentSceneView);
             }
             SetIsDone(true);
-            StateManager.Instance.ChangeState("MainGame2");
+            Intent intent = new Intent(GamePage.Instance,Mainmenu.class);
+            GamePage.Instance.startActivity(intent);
+            //StateManager.Instance.ChangeState("MainGame2");
+            Mainmenu.scene = "MainGame2";
+            //Init(GamePage.currentSceneView);
+            xPos = 500;
+            yPos = 500;
+            Camera.Instance.SetY(0);
         }
 
 

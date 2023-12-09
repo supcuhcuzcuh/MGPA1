@@ -20,6 +20,8 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
     private Button btn_back;
     private Button btn_quit;
 
+    public static String scene = "MainGame";
+    
     @Override
     protected void onCreate (Bundle saveInstanceState)
     {
@@ -42,8 +44,8 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
 
         Instance = this; // set the singleton others null error
 
-        StateManager.Instance.Init(new SurfaceView(this));
-        GameSystem.Instance.Init(new SurfaceView(this));
+        //StateManager.Instance.Init(new SurfaceView(this));
+        //GameSystem.Instance.Init(new SurfaceView(this));
         //StateManager.Instance.Start("Mainmenu");
         //AudioManager.Instance.PlayAudio(R.raw.gamemusic, 40);
     }
@@ -56,7 +58,7 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
        if (v == btn_start)
        {
            intent.setClass(this, GamePage.class);
-           StateManager.Instance.ChangeState("MainGame");
+           StateManager.Instance.ChangeState(scene);
            //StateManager.Instance.ChangeState("MainGame2");
        }
        else if (v == btn_back)
