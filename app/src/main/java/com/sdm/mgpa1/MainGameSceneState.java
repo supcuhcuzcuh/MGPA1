@@ -1,5 +1,6 @@
 package com.sdm.mgpa1;
 
+import android.app.Activity;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
@@ -9,7 +10,7 @@ import java.util.Random;
 
 // Created by TanSiewLan2021
 
-public class MainGameSceneState implements StateBase  {
+public class MainGameSceneState extends Activity implements StateBase  {
     private float timer = 0.0f;
     public static MainGameSceneState Instance = null;
     private float _spawnTimer = 0.0f;

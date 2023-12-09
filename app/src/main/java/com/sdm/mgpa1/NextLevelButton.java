@@ -1,5 +1,6 @@
 package com.sdm.mgpa1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,7 +12,7 @@ import android.view.SurfaceView;
 
 import com.sdm.mgpa1.EntityBase;
 
-public class PauseButton implements EntityBase {
+public class NextLevelButton extends Activity implements EntityBase {
     public float x, y; // Position of the button
     public float width, height; // Dimensions of the button
     private Bitmap PauseImage;
@@ -44,10 +45,11 @@ public class PauseButton implements EntityBase {
             if(withinMouseTouch(v2)) {
 
 
-
-                Log.d("Gang", "Init:GRRRR BAh ");
-                Paused = !Paused;
-
+                Intent intent = new Intent();
+                intent.setClass(GamePage.Instance.currentSceneView.getContext(), GamePage.class);
+                // Change the state to MainGame2 when unpaused
+                StateManager.Instance.ChangeState("MainGame2");
+                startActivity(intent);
             }
         });
 
@@ -87,7 +89,7 @@ public class PauseButton implements EntityBase {
     // Add a method to check if the button is clicked
     public boolean withinMouseTouch(V2 pos)
     {
-        V2 scale = new V2(PauseImage.getWidth() ,PauseImage.getHeight() );
+        V2 scale = new V2(PauseImage.getWidth() / 2,PauseImage.getHeight() / 2);
         boolean xDiff = (pos.x > x && pos.x < x + scale.x);
         boolean yDiff = (pos.y > y && pos.y < y + scale.y);
         return xDiff && yDiff;

@@ -1,6 +1,7 @@
 package com.sdm.mgpa1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,7 +17,7 @@ import java.util.Random;
 
 // Created by TanSiewLan2021
 
-public class MainGameSceneState2 implements StateBase  {
+public class MainGameSceneState2 extends Activity implements StateBase  {
     private float timer = 0.0f;
     public static MainGameSceneState2 Instance = null;
     private float _spawnTimer = 0.0f;
@@ -24,6 +25,11 @@ public class MainGameSceneState2 implements StateBase  {
     private SurfaceView _getView;
 
     private PauseButton button;
+
+    private  NextLevelButton nextscenebutton;
+
+
+    private  int score;
 
     @Override
     public String GetName() {
@@ -37,6 +43,7 @@ public class MainGameSceneState2 implements StateBase  {
         // 3. Create Background
         RenderBackground2.Create();
 
+
         button = new PauseButton();
         button.Init(_view);
         button.x = 50;
@@ -47,7 +54,7 @@ public class MainGameSceneState2 implements StateBase  {
         EntityPlayer player = EntityPlayer.Create(LayerConstants.SMURF_LAYER);
         player.Init(_view);
         player.SetPosX(500);
-        player.SetPosY(900);
+        player.SetPosY(500);
 
         int diff = _getView.getWidth()/2;
         Random r = new Random();
@@ -63,6 +70,7 @@ public class MainGameSceneState2 implements StateBase  {
             barrel.yPos = _getView.getHeight() - Camera.Instance.GetY();
         }
 
+        score = player.getScore();
 //        SmurfEntity _smurf = SmurfEntity.Create();
 //        _smurf.Init(_view);
         RenderTextEntity _text = RenderTextEntity.Create();
@@ -107,10 +115,16 @@ public class MainGameSceneState2 implements StateBase  {
     @Override
     public void Update(float _dt) {
 
+
+
+
         if(PauseButton.Paused){
 
             return;
         }
+
+
+
         EntityManager.Instance.Update(_dt);
         _spawnTimer += _dt;
         if (_spawnTimer >= _spawnTimerInterval)

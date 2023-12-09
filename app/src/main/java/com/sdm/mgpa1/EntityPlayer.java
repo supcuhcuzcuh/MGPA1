@@ -1,5 +1,7 @@
 package com.sdm.mgpa1;
 import android.adservices.appsetid.AppSetId;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -185,7 +187,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             spriteSheetIdle.Update(_dt);
         }
 
-        if (yPos + Camera.Instance.GetY() <= 0 || lives <= 0)
+        if (yPos + Camera.Instance.GetY() <= 0 || lives <= 0 ||  yPos + Camera.Instance.GetY() >=  GamePage.Instance.currentSceneView.getHeight())
         {
             Log.d("PLAYER", "HAS DIED");
             GameOverTextEntity gameOverText  = GameOverTextEntity.Create();
@@ -207,6 +209,12 @@ public class EntityPlayer implements EntityBase, Collidable {
         }
     }
 
+    private void ChangeToMainGame2() {
+        Intent intent = new Intent();
+        intent.setClass(GamePage.Instance.currentSceneView.getContext(), MainGameSceneState2.class); // Change MainGame2 to the actual class of your new scene
+        StateManager.Instance.ChangeState("MainGame");
+
+    }
     @Override
     public void Render(Canvas _canvas) {
         // basic rendering with image centered
@@ -286,6 +294,7 @@ public class EntityPlayer implements EntityBase, Collidable {
                 if (carEntity.scoreIncremented == false) {
                     score += 20;
 
+                    AudioManager.Instance.PlayAudio(R.raw.addscoresound, 600);
                     carEntity.scoreIncremented = true;
                 }
                 // Update player position to match car position
@@ -309,6 +318,7 @@ public class EntityPlayer implements EntityBase, Collidable {
                 if (carEntity.scoreIncremented == false) {
                     lives -= 1;
 
+                    AudioManager.Instance.PlayAudio(R.raw.hurtsound, 600);
                     carEntity.scoreIncremented = true;
                 }
                 // Update player position to match car position
@@ -335,6 +345,7 @@ public class EntityPlayer implements EntityBase, Collidable {
         {
             _movementSpeed = 100;
 
+            AudioManager.Instance.PlayAudio(R.raw.addscoresound, 600);
             isPowerupFastActive = true;
             powerupFastStartTime = System.currentTimeMillis();
         }
@@ -344,6 +355,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             // Set lerppos to 600 for a while
             lerppos = 600;
 
+            AudioManager.Instance.PlayAudio(R.raw.addscoresound, 600);
             // Activate powerup lerp
             isPowerupLerpActive = true;
             powerupLerpStartTime = System.currentTimeMillis();
