@@ -17,6 +17,8 @@ public interface EntityBase
         ENT_PLAYER,
         ENT_TEXT,
         ENT_SMURF,
+
+        PButton,
         ENT_DEFAULT, GoodCar, bg2, Jump_Powerup,
     }
 
