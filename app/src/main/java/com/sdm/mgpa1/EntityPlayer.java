@@ -54,6 +54,7 @@ public class EntityPlayer implements EntityBase, Collidable {
     private long powerupLerpStartTime = 0;
     private long powerupLerpDuration = 3000; // Duration in milliseconds (adjust as needed)
 
+    private  boolean WentScene2 = false;
     private boolean isPowerupFastActive = false;
     private long powerupFastStartTime = 0;
     private long powerupFastDuration = 3000; // Duration in milliseconds (adjust as needed)
@@ -193,6 +194,7 @@ public class EntityPlayer implements EntityBase, Collidable {
         {
             Log.d("PLAYER", "HAS DIED");
             AudioManager.Instance.PlayAudio(R.raw.gameover, 1);
+
             GameOverTextEntity gameOverText  = GameOverTextEntity.Create();
             if (gameOverText != null)
             {
@@ -208,7 +210,7 @@ public class EntityPlayer implements EntityBase, Collidable {
 //            Camera.Instance.SetY(0);
         }
 
-        if (score >= 100)
+        if (score >= 40 && WentScene2 == false)
         {
             Mainmenu.scene = "MainGame2";
             Intent intent = new Intent(GamePage.Instance,Mainmenu.class);
@@ -217,11 +219,19 @@ public class EntityPlayer implements EntityBase, Collidable {
             //Init(GamePage.currentSceneView);
             xPos = 500;
             yPos = 500;
+
+            WentScene2 = true;
             Camera.Instance.SetY(0);
         }
 
-        if (score >= 200)
+        if (score >= 60 && WentScene2 == true)
         {
+
+            WinTextEntity gameWinText  = WinTextEntity.Create();
+            if (gameWinText != null)
+            {
+                gameWinText.Init(GamePage.Instance.currentSceneView);
+            }
 
         }
 
