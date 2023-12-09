@@ -66,6 +66,7 @@ public class UpdateThread extends Thread {
             float deltaTime = (float) ((currTime - prevTime) / 1000000000.0f);
             prevTime = currTime;
 
+
             // Update
             StateManager.Instance.Update(deltaTime);
 

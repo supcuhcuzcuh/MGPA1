@@ -23,6 +23,8 @@ public class MainGameSceneState2 implements StateBase  {
     private float _spawnTimerInterval = 5f;
     private SurfaceView _getView;
 
+    private PauseButton button;
+
     @Override
     public String GetName() {
         return "MainGame2";
@@ -34,6 +36,13 @@ public class MainGameSceneState2 implements StateBase  {
         _getView = _view;
         // 3. Create Background
         RenderBackground2.Create();
+
+        button = new PauseButton();
+        button.Init(_view);
+        button.x = 50;
+        button.y = 50;
+        EntityManager.Instance.AddEntity(button, EntityBase.ENTITY_TYPE.PButton);
+
 
         EntityPlayer player = EntityPlayer.Create(LayerConstants.SMURF_LAYER);
         player.Init(_view);
@@ -97,6 +106,11 @@ public class MainGameSceneState2 implements StateBase  {
 
     @Override
     public void Update(float _dt) {
+
+        if(PauseButton.Paused){
+
+            return;
+        }
         EntityManager.Instance.Update(_dt);
         _spawnTimer += _dt;
         if (_spawnTimer >= _spawnTimerInterval)

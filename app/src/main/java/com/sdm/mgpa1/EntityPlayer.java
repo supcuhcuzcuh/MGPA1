@@ -102,6 +102,9 @@ public class EntityPlayer implements EntityBase, Collidable {
         lives  = 5;
         SwipeMovement.Instance.onSwipe.subscribe(direction ->
         {
+            if(PauseButton.Paused){
+                return;
+            }
             switch (direction)
             {
                 case left:
@@ -152,6 +155,10 @@ public class EntityPlayer implements EntityBase, Collidable {
 
     @Override
     public void Update(float _dt) {
+
+
+
+
         if (isPowerupLerpActive) {
             // Check if the powerup lerp duration has passed
             long currentTime = System.currentTimeMillis();
