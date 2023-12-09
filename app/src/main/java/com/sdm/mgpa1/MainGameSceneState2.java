@@ -36,8 +36,6 @@ public class MainGameSceneState2 implements StateBase  {
         // 3. Create Background
         RenderBackground2.Create();
 
-        
-
         EntityPlayer player = EntityPlayer.Create(LayerConstants.SMURF_LAYER);
         player.Init(GamePage.currentSceneView);
         player.SetPosX(500);
@@ -127,7 +125,6 @@ public class MainGameSceneState2 implements StateBase  {
             button.Update(_dt);
         
         if(PauseButton.Paused){
-
             return;
         }
         EntityManager.Instance.Update(_dt);
@@ -180,10 +177,6 @@ public class MainGameSceneState2 implements StateBase  {
             }
         }
         Camera.Instance.MoveWorldDown(80 * _dt);
-        //if (TouchManager.Instance.IsDown()) {
-        //6. Example of touch on screen in the main game to trigger back to Main menu
-        //StateManager.Instance.ChangeState("Mainmenu");
-        //}
     }
 }
 

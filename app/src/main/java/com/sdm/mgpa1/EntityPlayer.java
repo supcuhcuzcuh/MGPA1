@@ -198,13 +198,6 @@ public class EntityPlayer implements EntityBase, Collidable {
                 gameOverText.Init(GamePage.Instance.currentSceneView);
             }
             SetIsDone(true);
-//            Intent intent = new Intent(GamePage.Instance,Mainmenu.class);
-//            GamePage.Instance.startActivity(intent);
-//            //StateManager.Instance.ChangeState("MainGame2");
-//            //Init(GamePage.currentSceneView);
-//            xPos = 500;
-//            yPos = 500;
-//            Camera.Instance.SetY(0);
         }
 
         if (score >= 100)
