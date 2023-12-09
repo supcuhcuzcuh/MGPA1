@@ -23,7 +23,6 @@ public class GameSystem {
 
     public void Init(SurfaceView _view)
     {
-
         // 2. We will add all of our states into the state manager here!
         StateManager.Instance.AddState(new Mainmenu());
         // Please add state, NextPage.
@@ -32,7 +31,6 @@ public class GameSystem {
         StateManager.Instance.AddState(new MainGameSceneState());
 
         StateManager.Instance.AddState(new MainGameSceneState2());
-        
     }
 
     public void SetIsPaused(boolean _newIsPaused)
@@ -44,5 +42,4 @@ public class GameSystem {
     {
         return isPaused;
     }
-
 }

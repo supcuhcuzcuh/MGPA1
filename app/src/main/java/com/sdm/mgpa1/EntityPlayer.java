@@ -198,16 +198,31 @@ public class EntityPlayer implements EntityBase, Collidable {
                 gameOverText.Init(GamePage.Instance.currentSceneView);
             }
             SetIsDone(true);
+//            Intent intent = new Intent(GamePage.Instance,Mainmenu.class);
+//            GamePage.Instance.startActivity(intent);
+//            //StateManager.Instance.ChangeState("MainGame2");
+//            //Init(GamePage.currentSceneView);
+//            xPos = 500;
+//            yPos = 500;
+//            Camera.Instance.SetY(0);
+        }
+
+        if (score >= 100)
+        {
+            Mainmenu.scene = "MainGame2";
             Intent intent = new Intent(GamePage.Instance,Mainmenu.class);
             GamePage.Instance.startActivity(intent);
             //StateManager.Instance.ChangeState("MainGame2");
-            Mainmenu.scene = "MainGame2";
             //Init(GamePage.currentSceneView);
             xPos = 500;
             yPos = 500;
             Camera.Instance.SetY(0);
         }
 
+        if (score >= 200)
+        {
+
+        }
 
         // Check if player's position exceeds screen boundaries
         float screenWidth = GamePage.Instance.currentSceneView.getWidth();
@@ -276,7 +291,7 @@ public class EntityPlayer implements EntityBase, Collidable {
         }
         if (_other.GetType() == "EntityCoin")
         {
-            score += 5;
+            score += 20;
             AudioManager.Instance.PlayAudio(R.raw.addscoresound, 1);
         }
         if (_other.GetType() == "EntityBarrel")
@@ -284,7 +299,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             SwipeMovement.Instance.vibrate(2000, 100);
             AudioManager.Instance.PlayAudio(R.raw.hurtsound, 1);
             Log.d("COLLISION", "OnHit: BARREL");
-            lives -= 1;
+            //lives -= 1;
         }
         if (_other.GetType() == "EntityGoodCar")
         {
