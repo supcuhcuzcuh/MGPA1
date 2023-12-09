@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.View;
@@ -124,8 +125,6 @@ public class MainGameSceneState2 implements StateBase  {
             int diff = _getView.getWidth()/3;
             Random r = new Random();
             int heightDiff = _getView.getHeight()/3 ;
-
-
 
 
             for (int i = 0; i <= 0; ++i)

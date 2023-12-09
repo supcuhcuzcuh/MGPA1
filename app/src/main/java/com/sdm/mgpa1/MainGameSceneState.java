@@ -1,6 +1,9 @@
 package com.sdm.mgpa1;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.view.SurfaceView;
 
 import androidx.constraintlayout.helper.widget.Layer;
@@ -16,6 +19,7 @@ public class MainGameSceneState implements StateBase  {
     private float _spawnTimerInterval = 5f;
     public SurfaceView getView;
 
+    private PauseButton _pauseButton;
     @Override
     public String GetName() {
         return "MainGame";
@@ -28,6 +32,13 @@ public class MainGameSceneState implements StateBase  {
         getView = _view;
         // 3. Create Background 
         RenderBackground.Create();
+
+        _pauseButton = new PauseButton();
+        _pauseButton.SetRenderLayer(LayerConstants.UI_LAYER);
+        _pauseButton.Init(_view);
+        _pauseButton.x = 50;
+        _pauseButton.y = 50;
+        EntityManager.Instance.AddEntity(_pauseButton, EntityBase.ENTITY_TYPE.PButton);
 
         EntityPlayer player = EntityPlayer.Create();
         player.Init(_view);
@@ -85,15 +96,27 @@ public class MainGameSceneState implements StateBase  {
 
         EntityCoin coin = EntityCoin.Create(LayerConstants.COIN_LAYER);
         coin.Init(_view);
-       // AudioManager.Instance.PlayAudio(R.raw.gamemusic, 40);
+        AudioManager.Instance.PlayAudio(R.raw.maingame1music, 5000);
         // Example to include another Renderview for Pause Button
     }
 
+    void ChangeScene()
+    {
+        StateManager.Instance.ChangeState("MainGame2");
+    }
 
     @Override
     public void Update(float _dt) {
         EntityManager.Instance.Update(_dt);
         _spawnTimer += _dt;
+        if (PauseButton.Paused) {
+            return;
+        }
+
+        if (EntityPlayer.Instance.getLives() <= 0)
+        {
+            ChangeScene();
+        }
 
         if (_spawnTimer >= _spawnTimerInterval) {
             _spawnTimer = 0;

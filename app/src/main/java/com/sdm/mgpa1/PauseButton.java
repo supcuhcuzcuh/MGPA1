@@ -14,12 +14,9 @@ public class PauseButton implements EntityBase {
     public float x, y; // Position of the button
     public float width, height; // Dimensions of the button
     private Bitmap PauseImage;
+    private int _renderLayer;
 
     public static  boolean Paused;
-
-
-
-
 
     @Override
     public boolean IsDone() {
@@ -46,7 +43,6 @@ public class PauseButton implements EntityBase {
                 Paused = !Paused;
             }
         });
-
     }
 
     @Override
@@ -67,12 +63,13 @@ public class PauseButton implements EntityBase {
 
     @Override
     public int GetRenderLayer() {
-        return 0;
+        return LayerConstants.UI_LAYER;
     }
 
     @Override
     public void SetRenderLayer(int _newLayer) {
         // Implement if needed
+        _renderLayer = _newLayer;
     }
 
     @Override
@@ -88,7 +85,4 @@ public class PauseButton implements EntityBase {
         boolean yDiff = (pos.y > y && pos.y < y + scale.y);
         return xDiff && yDiff;
     }
-
-    // Add a method to handle button click
-
 }

@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,6 +45,7 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
         StateManager.Instance.Init(new SurfaceView(this));
         GameSystem.Instance.Init(new SurfaceView(this));
         //StateManager.Instance.Start("Mainmenu");
+        //AudioManager.Instance.PlayAudio(R.raw.gamemusic, 40);
     }
 
     @Override
@@ -59,8 +61,8 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
        }
        else if (v == btn_back)
        {
-           intent.setClass(this, NextPage.class);
-           StateManager.Instance.ChangeState("MainPage");
+           intent.setClass(this, GamePage.class);
+           StateManager.Instance.ChangeState("NextPage");
        }
        else if (v == btn_quit)
        {
@@ -68,7 +70,6 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
        }
        startActivity(intent);
     }
-
 
     @Override
     protected void onPause(){super.onPause();}
