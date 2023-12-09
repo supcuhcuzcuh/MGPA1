@@ -54,6 +54,7 @@ public class EntityPlayer implements EntityBase, Collidable {
     private long powerupLerpStartTime = 0;
     private long powerupLerpDuration = 3000; // Duration in milliseconds (adjust as needed)
 
+    private  boolean WentScene2 = false;
     private boolean isPowerupFastActive = false;
     private long powerupFastStartTime = 0;
     private long powerupFastDuration = 3000; // Duration in milliseconds (adjust as needed)
@@ -188,10 +189,12 @@ public class EntityPlayer implements EntityBase, Collidable {
             spriteSheetIdle.Update(_dt);
         }
 
-        if (yPos + Camera.Instance.GetY() <= 0 || lives <= 0) // Die Conditions for Player
+       // Die Conditions for Player
+        if (yPos + Camera.Instance.GetY() <= 0 || lives <= 0 ||  yPos + Camera.Instance.GetY() >=  GamePage.Instance.currentSceneView.getHeight())
         {
             Log.d("PLAYER", "HAS DIED");
             AudioManager.Instance.PlayAudio(R.raw.gameover, 1);
+
             GameOverTextEntity gameOverText  = GameOverTextEntity.Create();
             if (gameOverText != null)
             {
@@ -200,7 +203,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             SetIsDone(true);
         }
 
-        if (score >= 100)
+        if (score >= 40 && WentScene2 == false)
         {
             Mainmenu.scene = "MainGame2";
             Intent intent = new Intent(GamePage.Instance,Mainmenu.class);
@@ -209,11 +212,19 @@ public class EntityPlayer implements EntityBase, Collidable {
             //Init(GamePage.currentSceneView);
             xPos = 500;
             yPos = 500;
+
+            WentScene2 = true;
             Camera.Instance.SetY(0);
         }
 
-        if (score >= 200)
+        if (score >= 60 && WentScene2 == true)
         {
+
+            WinTextEntity gameWinText  = WinTextEntity.Create();
+            if (gameWinText != null)
+            {
+                gameWinText.Init(GamePage.Instance.currentSceneView);
+            }
 
         }
 
@@ -292,7 +303,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             SwipeMovement.Instance.vibrate(2000, 100);
             AudioManager.Instance.PlayAudio(R.raw.hurtsound, 1);
             Log.d("COLLISION", "OnHit: BARREL");
-            //lives -= 1;
+            lives -= 1;
         }
         if (_other.GetType() == "EntityGoodCar")
         {
@@ -306,6 +317,7 @@ public class EntityPlayer implements EntityBase, Collidable {
                 if (carEntity.scoreIncremented == false) {
                     score += 20;
 
+                    AudioManager.Instance.PlayAudio(R.raw.addscoresound, 600);
                     carEntity.scoreIncremented = true;
                 }
                 // Update player position to match car position
@@ -327,6 +339,7 @@ public class EntityPlayer implements EntityBase, Collidable {
                 if (carEntity.scoreIncremented == false) {
                     lives -= 1;
 
+                    AudioManager.Instance.PlayAudio(R.raw.hurtsound, 600);
                     carEntity.scoreIncremented = true;
                 }
                 // Update player position to match car position
@@ -363,6 +376,7 @@ public class EntityPlayer implements EntityBase, Collidable {
             // Set lerppos to 600 for a while
             lerppos = 600;
 
+            AudioManager.Instance.PlayAudio(R.raw.addscoresound, 600);
             // Activate powerup lerp
             isPowerupLerpActive = true;
             powerupLerpStartTime = System.currentTimeMillis();

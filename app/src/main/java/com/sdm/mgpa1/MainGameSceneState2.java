@@ -25,6 +25,11 @@ public class MainGameSceneState2 implements StateBase  {
 
     private PauseButton button;
 
+    private  NextLevelButton nextscenebutton;
+
+
+    private  int score;
+
     @Override
     public String GetName() {
         return "MainGame2";
@@ -36,10 +41,12 @@ public class MainGameSceneState2 implements StateBase  {
         // 3. Create Background
         RenderBackground2.Create();
 
+
+
         EntityPlayer player = EntityPlayer.Create(LayerConstants.SMURF_LAYER);
         player.Init(GamePage.currentSceneView);
         player.SetPosX(500);
-        player.SetPosY(900);
+        player.SetPosY(500);
 
         int diff = GamePage.currentSceneView.getWidth()/2;
         Random r = new Random();
@@ -55,6 +62,7 @@ public class MainGameSceneState2 implements StateBase  {
             barrel.yPos = GamePage.currentSceneView.getHeight() - Camera.Instance.GetY();
         }
 
+        score = player.getScore();
 //        SmurfEntity _smurf = SmurfEntity.Create();
 //        _smurf.Init(_view);
         RenderTextEntity _text = RenderTextEntity.Create();
@@ -123,10 +131,16 @@ public class MainGameSceneState2 implements StateBase  {
         }
         if (button != null)
             button.Update(_dt);
-        
+
+
+
+
         if(PauseButton.Paused){
             return;
         }
+
+
+
         EntityManager.Instance.Update(_dt);
         _spawnTimer += _dt;
         if (_spawnTimer >= _spawnTimerInterval)

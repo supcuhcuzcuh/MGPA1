@@ -21,7 +21,7 @@ public class Mainmenu extends Activity implements OnClickListener, StateBase{
     private Button btn_quit;
 
     public static String scene = "MainGame";
-    
+
     @Override
     protected void onCreate (Bundle saveInstanceState)
     {
